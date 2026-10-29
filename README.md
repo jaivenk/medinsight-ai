@@ -22,6 +22,41 @@ The application is built using **Python, FastAPI, HTML, CSS, and JavaScript**, a
 
 > **Important:** MedInsight AI is an educational research prototype, not a diagnostic tool or a clinically validated AI system. It does not provide diagnoses, disease probabilities, treatment recommendations, or medical advice. Do not enter real patient information.
 
+
+## Application Preview
+
+### CliniCare Bay — Dashboard
+
+A centralized workspace for exploring fictional cases, synthetic
+patient records, and trusted medical references.
+
+![MedInsight AI Dashboard](docs/images/dashboard.png)
+
+### Features in Action
+
+<table>
+  <tr>
+    <td width="50%">
+      <strong>Fictional Patient Intake</strong>
+      <img src="docs/images/patient-intake.png"
+           alt="MedInsight fictional patient intake interface">
+    </td>
+    <td width="50%">
+      <strong>Medical Research Results</strong>
+      <img src="docs/images/results.png"
+           alt="MedInsight synthetic patient research results">
+    </td>
+  </tr>
+</table>
+
+### Medical Library
+
+Explore health information and access established medical
+reference sources.
+
+![MedInsight Medical Library](docs/images/medical-library.png)
+
+
 ## Features
 
 ### Fictional Patient Case Analysis
