@@ -8,8 +8,15 @@ __pycache__/
 *.pyc
 
 # Synthetic patient data
-backend/data/
+# Ignore CSV files by default
 *.csv
+
+# Allow a small sample of fictional patient records
+!backend/data/
+!backend/data/patients.csv
+!backend/data/conditions.csv
+!backend/data/medications.csv
+!backend/data/allergies.csv
 
 # Secrets
 .env
