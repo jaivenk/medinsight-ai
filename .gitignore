@@ -1,0 +1,28 @@
+
+# Python virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Synthetic patient data
+backend/data/
+*.csv
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# macOS and editor settings
+.DS_Store
+.vscode/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3

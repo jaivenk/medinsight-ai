@@ -1,0 +1,1915 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedInsight | CliniCare Bay</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+
+
+<style>
+:root {
+  --ink: #183442;
+  --sub: #5c7280;
+  --teal: #0b8285;
+  --teal2: #30aaa5;
+  --nav: #102d3b;
+  --line: #dce9ed;
+  --white: #fff;
+  --shadow: 0 14px 45px rgba(21,69,83,.075);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont,
+    "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 95% -10%, #ccefeb 0, transparent 34%),
+    radial-gradient(ellipse at 10% 82%, #e2eaf8 0, transparent 37%),
+    linear-gradient(145deg, #f7fcfd, #f4f8fa 68%, #eaf7f4);
+  min-height: 100vh;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { opacity: .55; cursor: wait; }
+a { color: #08777b; }
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+
+.side {
+  width: 242px;
+  flex-shrink: 0;
+  padding: 30px 17px;
+  background: linear-gradient(165deg, #102d3b, #153f4b);
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 770;
+  letter-spacing: -1px;
+  margin: 3px 9px 46px;
+}
+
+.logo em {
+  font-style: normal;
+  color: #6fe2d5;
+}
+
+.nav {
+  border: 0;
+  display: block;
+  width: 100%;
+  padding: 14px 15px;
+  text-align: left;
+  background: none;
+  color: #bfd4da;
+  border-radius: 11px;
+  margin-bottom: 6px;
+  font-weight: 560;
+}
+
+.nav:hover, .nav.active {
+  background: rgba(164,225,224,.15);
+  color: white;
+}
+
+.sidenote {
+  margin-top: auto;
+  padding: 13px 9px;
+  color: #acc5cc;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* Main content */
+
+.main {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 44px clamp(22px, 4vw, 65px);
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 730;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #098d8e;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.header h1 {
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -1.5px;
+  line-height: 1.13;
+  margin: 11px 0;
+}
+
+.muted {
+  color: var(--sub);
+  line-height: 1.6;
+}
+
+.header p { margin: 0; }
+
+.pill {
+  border: 1px solid #bce7de;
+  background: #e9faf6;
+  padding: 9px 14px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #087b75;
+}
+
+/* Cards */
+
+.panel {
+  border: 1px solid rgba(203,224,232,.9);
+  background: rgba(255,255,255,.87);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 25px;
+}
+
+/* Welcome hero */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.45fr .85fr;
+  align-items: center;
+  gap: 26px;
+  padding: clamp(27px, 4vw, 48px);
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,.94),
+    rgba(225,248,245,.88)
+  );
+  margin-bottom: 23px;
+  overflow: hidden;
+}
+
+.hero h2 {
+  font-size: clamp(29px, 3.1vw, 45px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin: 14px 0;
+}
+
+.hero p { max-width: 550px; }
+
+.heroart {
+  border-radius: 25px;
+  background: linear-gradient(145deg, #e7f8f8, #b4e5df);
+  height: 235px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.heroart:before, .heroart:after {
+  content: "";
+  position: absolute;
+  border: 1px solid #ffffffb3;
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+}
+
+.heroart:after {
+  width: 120px;
+  height: 120px;
+}
+
+.cross {
+  z-index: 1;
+  color: #0b777d;
+  font-size: 75px;
+  font-weight: 600;
+  text-shadow: 0 2px 15px #ffffff7a;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: 11px;
+  padding: 13px 19px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 0;
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.primary {
+  color: #fff;
+  background: linear-gradient(110deg, #097d83, #159e9b);
+  box-shadow: 0 7px 16px #0b909023;
+}
+
+.primary:hover { filter: brightness(1.06); }
+
+.secondary {
+  color: #0d727a;
+  background: #e8f5f6;
+  border: 1px solid #cce7e7;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 23px;
+}
+
+/* Statistics */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 19px 0 25px;
+}
+
+.stat .label {
+  font-size: 12px;
+  color: var(--sub);
+}
+
+.stat strong {
+  display: block;
+  margin: 10px 0 3px;
+  font-size: 28px;
+  letter-spacing: -.7px;
+}
+
+.stat .detail {
+  font-size: 12px;
+  color: #6e8590;
+}
+
+/* Forms and analysis */
+
+.sectionhead {
+  font-size: 22px;
+  letter-spacing: -.5px;
+  margin: 0 0 7px;
+}
+
+.sectionintro {
+  margin: 0 0 23px;
+  color: var(--sub);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 19px;
+}
+
+.stack {
+  display: grid;
+  gap: 19px;
+  align-content: start;
+}
+
+.fieldlabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 650;
+  margin: 15px 0 7px;
+}
+
+input, textarea, select {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #cadce2;
+  border-radius: 10px;
+  padding: 12px 13px;
+  color: var(--ink);
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #149c9d;
+  box-shadow: 0 0 0 3px #c5f0ed;
+}
+
+textarea {
+  min-height: 94px;
+  resize: vertical;
+}
+
+.twocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.status {
+  font-size: 13px;
+  color: var(--sub);
+  min-height: 16px;
+}
+
+.notice {
+  margin: 20px 0 0;
+  background: #f1faf9;
+  border: 1px solid #d6edeb;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #486d72;
+  line-height: 1.6;
+}
+
+.result {
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+}
+
+/* Medical Library */
+
+.topic {
+  margin-top: 13px;
+  background: #f5fafb;
+  border: 1px solid #dfebed;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.topic h3 {
+  margin: 0 0 7px;
+  font-size: 16px;
+}
+
+.topic p {
+  margin: 4px 0 10px;
+  line-height: 1.6;
+  font-size: 14px;
+  color: #425e6e;
+}
+
+.topic a { font-size: 13px; }
+
+.page, .analysis-view { display: none; }
+.page.active,
+.analysis-view.active {
+  display: block;
+}
+
+.blank {
+  padding: 25px;
+  text-align: center;
+  border: 1px dashed #c9dee3;
+  border-radius: 12px;
+  color: #64818b;
+}
+
+.minititle {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--line);
+  margin: 20px 0;
+}
+
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.privacy {
+  padding-top: 12px;
+  font-size: 12px;
+  color: #687f88;
+}
+
+.privacy strong { color: #315c67; }
+
+.linklist a {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hidden { display: none !important; }
+
+/* Mobile */
+
+@media(max-width:1000px) {
+  .hero { grid-template-columns: 1fr; }
+  .heroart { display: none; }
+  .layout { grid-template-columns: 1fr; }
+}
+
+@media(max-width:700px) {
+  .app { display: block; }
+  .side { width: 100%; padding: 15px; display: block; }
+  .logo { margin: 0 0 12px; }
+  .nav {
+    display: inline-block;
+    width: auto;
+    margin-right: 5px;
+    padding: 10px;
+  }
+  .sidenote { display: none; }
+  .main { padding: 25px 16px; }
+  .header { align-items: flex-start; }
+  .stats, .library-grid { grid-template-columns: 1fr; }
+  .twocol { grid-template-columns: 1fr; }
+  .hero { padding: 25px; }
+  .panel { padding: 20px; }
+}
+
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand-logo svg {
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 7px rgba(111,226,213,.22));
+  transition: transform .25s ease, filter .25s ease;
+}
+
+.brand-logo:hover svg {
+  transform: scale(1.12) rotate(6deg);
+  filter: drop-shadow(0 0 13px rgba(111,226,213,.55));
+}
+
+.brand-logo span {
+  white-space: nowrap;
+  font-size: 22px;
+  letter-spacing: -1px;
+}
+
+
+/* Interactive hover effects */
+
+.btn,
+.nav,
+.stat,
+.topic,
+.linklist a {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+@media (hover: hover) {
+  .btn:hover,
+  .nav:hover {
+    transform: scale(1.045);
+  }
+
+  .stat:hover,
+  .topic:hover {
+    transform: translateY(-4px) scale(1.015);
+    box-shadow: 0 18px 35px rgba(21, 69, 83, 0.12);
+  }
+
+  .linklist a:hover {
+    transform: translateX(5px);
+  }
+}
+
+.btn:active,
+.nav:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .nav,
+  .stat,
+  .topic,
+  .linklist a {
+    transition: none;
+  }
+}
+
+
+/* Compact expandable medical results */
+
+.condition-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.condition-card {
+  background: #f8fcfc;
+  border: 1px solid #dce9ed;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.condition-card:hover {
+  box-shadow: 0 8px 22px rgba(13, 93, 104, .08);
+}
+
+.condition-card summary {
+  padding: 16px 18px;
+  cursor: pointer;
+  font-weight: 650;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.condition-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.condition-card summary::after {
+  content: "+";
+  font-size: 22px;
+  color: #087e8b;
+}
+
+.condition-card[open] summary::after {
+  content: "−";
+}
+
+.condition-content {
+  padding: 0 18px 16px;
+  color: #526d79;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.condition-content p {
+  margin: 8px 0;
+}
+
+.more-results {
+  width: 100%;
+  margin-top: 13px;
+  background: #e8f5f6;
+  color: #087e8b;
+  border: 1px solid #cce7e7;
+  border-radius: 11px;
+  padding: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.more-results:hover {
+  background: #d7eff0;
+}
+
+.condition-list[hidden] {
+  display: none;
+}
+
+/* Apple-inspired liquid glass accordion */
+
+.condition-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+
+  box-shadow:
+    0 3px 12px rgba(19, 77, 88, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  transition:
+    background 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.45s cubic-bezier(.2, 1.3, .4, 1),
+    border-color 0.3s ease;
+}
+
+.condition-card:hover {
+  transform: translateY(-2px) scale(1.01);
+
+  box-shadow:
+    0 12px 28px rgba(13, 93, 104, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.condition-card[open] {
+  background: rgba(245, 255, 253, 0.88);
+  border-color: rgba(93, 190, 189, 0.45);
+
+  box-shadow:
+    0 15px 35px rgba(8, 126, 139, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* Header */
+
+.condition-card summary {
+  position: relative;
+  padding: 19px 20px;
+  border-radius: 17px;
+  transition: background 0.3s ease;
+}
+
+.condition-card summary:hover {
+  background: rgba(180, 235, 232, 0.15);
+}
+
+/* Animated plus / minus */
+
+.condition-card summary::after {
+  content: "+";
+  font-size: 23px;
+  font-weight: 400;
+  color: #087e8b;
+
+  transition:
+    transform 0.4s cubic-bezier(.2, 1.3, .4, 1),
+    color 0.3s ease;
+}
+
+.condition-card[open] summary::after {
+  content: "+";
+  transform: rotate(45deg);
+}
+
+/* Expandable content */
+
+.condition-content {
+  padding: 0 20px 20px;
+  overflow: hidden;
+  transform-origin: top;
+}
+
+.condition-card[open] .condition-content {
+  animation: glassReveal 0.48s
+    cubic-bezier(.2, 1, .3, 1) both;
+}
+
+@keyframes glassReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(.97);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .condition-card,
+  .condition-card summary,
+  .condition-card summary::after,
+  .condition-content {
+    transition: none;
+    animation: none !important;
+  }
+}
+
+/* Animate the accordion's actual height */
+
+@supports (interpolate-size: allow-keywords) {
+  .condition-card {
+    interpolate-size: allow-keywords;
+  }
+
+  .condition-card::details-content {
+    display: block;
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.5s cubic-bezier(.22, 1, .36, 1),
+      content-visibility 0.5s allow-discrete;
+  }
+
+  .condition-card[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* Apple-style expanding accordion */
+
+.condition-card {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(190, 224, 225, 0.7);
+  border-radius: 19px;
+  overflow: hidden;
+
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+
+  transition:
+    background 0.45s ease,
+    box-shadow 0.45s ease,
+    border-color 0.45s ease,
+    transform 0.45s cubic-bezier(.22, 1, .36, 1);
+}
+
+.condition-card.expanded {
+  background: rgba(244, 255, 253, 0.92);
+  border-color: rgba(83, 184, 182, 0.5);
+  box-shadow: 0 12px 30px rgba(8, 126, 139, 0.09);
+}
+
+.condition-header {
+  width: 100%;
+  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  color: #183442;
+  font-size: 15px;
+  font-weight: 650;
+  text-align: left;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  cursor: pointer;
+}
+
+.condition-header:focus-visible {
+  outline: 2px solid #0b8285;
+  outline-offset: -3px;
+}
+
+.condition-icon {
+  font-size: 23px;
+  font-weight: 400;
+  color: #087e8b;
+
+  transition: transform 0.55s
+    cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.condition-card.expanded .condition-icon {
+  transform: rotate(45deg);
+}
+
+/* This is what actually makes the card grow */
+.condition-wrapper {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.6s
+    cubic-bezier(.22, 1.15, .36, 1);
+}
+
+.condition-content {
+  padding: 0 20px 20px;
+  opacity: 0;
+  transform: translateY(-7px);
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s cubic-bezier(.22, 1, .36, 1);
+}
+
+.condition-card.expanded .condition-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .condition-card,
+  .condition-wrapper,
+  .condition-content,
+  .condition-icon {
+    transition: none !important;
+  }
+}
+
+
+/* Expandable data sources glass panel */
+
+.sources-stat {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: fit-content;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+
+  transition:
+    background .4s ease,
+    box-shadow .4s ease,
+    transform .45s cubic-bezier(.22,1,.36,1);
+}
+
+.sources-stat:hover,
+.sources-stat:focus-visible {
+  background: rgba(242,255,253,.93);
+  box-shadow:
+    0 18px 38px rgba(13,93,104,.13),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.sources-stat:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+/* Smoothly grow and shrink the card */
+
+.sources-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+
+  transition:
+    grid-template-rows .58s cubic-bezier(.22,1,.36,1),
+    opacity .35s ease,
+    margin-top .58s cubic-bezier(.22,1,.36,1);
+}
+
+.sources-stat:hover .sources-reveal,
+.sources-stat:focus .sources-reveal {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+/* Make the reveal content fit inside a grid row */
+
+.sources-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 7px;
+
+  min-height: 0;
+  overflow: hidden;
+
+  border-top: 1px solid rgba(120,190,190,.25);
+  padding-top: 0;
+
+  transition: padding-top .4s ease;
+}
+
+.sources-stat:hover .sources-strip,
+.sources-stat:focus .sources-strip {
+  padding-top: 15px;
+}
+
+/* Individual icon and source name */
+
+.source-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  min-width: 0;
+
+  font-size: 10px;
+  font-weight: 650;
+  color: #54747b;
+
+  transform: translateY(-8px) scale(.93);
+  opacity: 0;
+
+  transition:
+    transform .45s cubic-bezier(.34,1.3,.64,1),
+    opacity .3s ease;
+}
+
+.sources-stat:hover .source-item,
+.sources-stat:focus .source-item {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.source-item:nth-child(2) { transition-delay: 45ms; }
+.source-item:nth-child(3) { transition-delay: 90ms; }
+.source-item:nth-child(4) { transition-delay: 135ms; }
+
+.source-item img {
+  width: 33px;
+  height: 33px;
+  object-fit: contain;
+  padding: 6px;
+
+  border-radius: 11px;
+  background: rgba(255,255,255,.85);
+  border: 1px solid rgba(190,225,225,.65);
+
+  box-shadow: 0 3px 10px rgba(25,80,90,.07);
+}
+
+.sources-divider {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sources-stat,
+  .sources-reveal,
+  .sources-strip,
+  .source-item {
+    transition: none !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="side" aria-label="Main navigation">
+   
+<div class="logo brand-logo">
+  <svg
+    width="43"
+    height="43"
+    viewBox="0 0 80 80"
+    aria-label="Illuminated medical cross"
+    role="img"
+  >
+    <defs>
+      <linearGradient id="logoGradient"
+        x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#91f2df"/>
+        <stop offset="100%" stop-color="#2cb6be"/>
+      </linearGradient>
+    </defs>
+
+    <g stroke="#78dfd5"
+       stroke-width="2.8"
+       stroke-linecap="round">
+      <path d="
+        M40 5V13
+        M40 67V75
+        M5 40H13
+        M67 40H75
+        M15 15L21 21
+        M59 59L65 65
+        M65 15L59 21
+        M21 59L15 65
+      "/>
+    </g>
+
+    <rect x="32" y="21"
+      width="16" height="38"
+      rx="4" fill="url(#logoGradient)"/>
+
+    <rect x="21" y="32"
+      width="38" height="16"
+      rx="4" fill="url(#logoGradient)"/>
+  </svg>
+
+  <span>Med<em>Insight</em></span>
+</div>
+
+
+    <button class="nav active" data-page="dashboard">
+      ⌂ &nbsp; CliniCare Bay
+    </button>
+
+    <button class="nav" data-page="library">
+      ▤ &nbsp; Medical Library
+    </button>
+
+    <div class="sidenote">
+      v0.7 · Student-built prototype<br>
+      Local development · Synthetic records only
+    </div>
+  </aside>
+
+  <main class="main">
+
+
+<header class="header">
+  <div>
+    <h1>Welcome to the CliniCare Bay</h1>
+    <p class="muted">
+      Explore possible conditions through AI-assisted
+      symptom analysis.
+    </p>
+  </div>
+
+  <span class="pill">Educational prototype</span>
+</header>
+
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="page active">
+
+      <div id="welcomeView">
+
+        <section class="hero panel">
+          <div>
+            <span class="eyebrow">Thoughtful health research</span>
+
+            <h2>A clearer picture starts here.</h2>
+
+            <p class="muted">
+              Explore fictional patient histories, organize
+              case information, and discover credible medical
+              resources—all in one simple workspace.
+            </p>
+
+            <div class="actions">
+              <button class="btn primary" id="startAnalysis">
+                Start analysis now ↗
+              </button>
+
+              <button class="btn secondary" id="openLibrary">
+                Explore medical library
+              </button>
+            </div>
+          </div>
+
+          <div class="heroart" aria-hidden="true">
+            <span class="cross">✚</span>
+          </div>
+        </section>
+
+ 
+<div class="stats">
+  <div class="panel stat">
+    <span class="label">Available demo patients</span>
+    <strong id="patientCount">—</strong>
+    <span class="detail">Synthetic Synthea records</span>
+  </div>
+
+  
+<button type="button" class="panel stat sources-stat"
+        aria-label="Explore MedInsight's three data sources">
+
+  <span class="label">Connected Data Sources</span>
+  <strong>3</strong>
+  <span class="detail">Hover to explore our sources ↓</span>
+
+  <span class="sources-reveal">
+    <span class="sources-divider"></span>
+
+    <span class="sources-strip">
+
+      <span class="source-item">
+        <img
+          src="https://www.google.com/s2/favicons?domain=medlineplus.gov&sz=64"
+          alt=""
+          loading="lazy">
+        <span>MedlinePlus</span>
+      </span>
+
+      <span class="source-item">
+        <img
+          src="https://www.google.com/s2/favicons?domain=clinicaltables.nlm.nih.gov&sz=64"
+          alt=""
+          loading="lazy">
+        <span>NLM Tables</span>
+      </span>
+
+      <span class="source-item">
+        <img
+          src="https://www.google.com/s2/favicons?domain=synthetichealth.github.io&sz=64"
+          alt=""
+          loading="lazy">
+        <span>Synthea</span>
+      </span>
+
+    </span>
+  </span>
+
+</button>
+
+
+  <div class="panel stat">
+    <span class="label">Research Engine</span>
+    <strong>Multi-source</strong>
+    <span class="detail">
+      Symptom matching + medical reference retrieval
+    </span>
+  </div>
+</div>
+
+
+
+        <div class="panel">
+          <h3 class="minititle">
+  Open-source medical research prototype
+</h3>
+
+          <p class="muted">
+            No login, account system, or patient database storage
+            is implemented in this prototype. It is not suitable
+            for real patient information, diagnosis, or medical advice.
+          </p>
+
+          
+<a
+  href="https://github.com/jaivenk/medinsight-ai"
+  class="btn secondary"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <svg width="19" height="19" viewBox="0 0 24 24"
+       fill="currentColor" aria-hidden="true">
+    <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.69-3.88-1.36-3.88-1.36-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18A10.94 10.94 0 0 1 12 6.61c.97 0 1.94.13 2.85.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.73.81 1.18 1.84 1.18 3.1 0 4.42-2.68 5.39-5.24 5.68.41.35.77 1.04.77 2.1v3.1c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+  </svg>
+  View on GitHub ↗
+</a>
+
+        </div>
+
+      </div>
+
+      <!-- Analysis workspace: hidden initially -->
+      <div id="analysisView" class="analysis-view">
+
+        <div class="actions" style="margin:0 0 18px">
+          <button class="btn secondary" id="backHome">
+            ← Back to overview
+          </button>
+        </div>
+
+        <h2 class="sectionhead">Fictional Case Analysis</h2>
+        <p class="sectionintro">
+          Enter a sample case or load a synthetic record to
+          create an educational research report.
+        </p>
+
+        <div class="layout">
+          <div class="stack">
+
+            <div class="panel">
+              <h3 class="minititle">Load a synthetic patient</h3>
+              <p class="muted">
+                Optional: populate fields using
+                Synthea-generated records.
+              </p>
+
+              <label class="fieldlabel" for="patientSelect">
+                Select patient
+              </label>
+
+              <select id="patientSelect">
+                <option value="">Choose a fictional patient…</option>
+              </select>
+
+              <button class="btn secondary" type="button"
+                      id="loadPatient" style="margin-top:12px">
+                Load patient record
+              </button>
+
+              <p id="patientStatus" class="status"
+                 aria-live="polite"></p>
+            </div>
+
+            <div class="panel">
+              <h3 class="minititle">Patient Intake</h3>
+
+              <form id="patientForm">
+
+                <div class="twocol">
+                  <div>
+                    <label class="fieldlabel" for="name">
+                      Patient name
+                    </label>
+                    <input id="name" required maxlength="100"
+                           placeholder="Fictional name">
+                  </div>
+
+                  <div>
+                    <label class="fieldlabel" for="age">Age</label>
+                    <input id="age" type="number"
+                           min="0" max="120" required>
+                  </div>
+                </div>
+
+                <label class="fieldlabel" for="symptoms">
+                  Reported symptoms
+                </label>
+                <textarea id="symptoms" required maxlength="2000"
+                  placeholder="Describe a fictional case…"></textarea>
+
+                <label class="fieldlabel" for="duration">
+                  Duration
+                </label>
+                <input id="duration" placeholder="e.g. 3 days">
+
+                <label class="fieldlabel" for="history">
+                  Medical history
+                </label>
+                <textarea id="history"></textarea>
+
+                <label class="fieldlabel" for="medications">
+                  Medications
+                </label>
+                <textarea id="medications"></textarea>
+
+                <label class="fieldlabel" for="allergies">
+                  Known allergies
+                </label>
+                <textarea id="allergies"></textarea>
+
+                <button class="btn primary" id="submitButton"
+                        type="submit" style="margin-top:18px">
+                  Generate research report ↗
+                </button>
+
+              </form>
+            </div>
+          </div>
+
+          <div class="stack">
+
+            <div class="panel">
+              <h3 class="minititle">Case analysis report</h3>
+
+              <p class="muted">
+                Shows reported details and example condition-topic
+                matches—not a diagnosis.
+              </p>
+
+              <div id="results" class="result blank"
+                   aria-live="polite">
+                Your report will appear here.
+              </div>
+            </div>
+
+            <div class="panel">
+              <h3 class="minititle">
+                Quick medical topic lookup
+              </h3>
+
+              <label class="fieldlabel" for="quickSearch">
+                Search the NIH database
+              </label>
+
+              <input id="quickSearch" placeholder="e.g. eczema">
+
+              <button class="btn secondary" id="quickSearchButton"
+                      type="button" style="margin-top:12px">
+                Search topics
+              </button>
+
+              <div id="quickResults" aria-live="polite"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Medical Library -->
+    <section id="library" class="page">
+
+      <h2 class="sectionhead">Medical Library</h2>
+
+      <p class="sectionintro">
+        Browse evidence-based health information, right here
+        or at the original source.
+      </p>
+
+      <div class="library-grid">
+
+        <div class="panel">
+          <h3 class="minititle">Search MedlinePlus</h3>
+
+          <p class="muted">
+            Explore NIH health topics and read short
+            descriptions without leaving MedInsight.
+          </p>
+
+          <label class="fieldlabel" for="medicalSearch">
+            Medical topic
+          </label>
+
+          <input id="medicalSearch"
+                 placeholder="e.g. eczema, asthma, psoriasis">
+
+          <button class="btn primary" id="searchMedical"
+                  type="button" style="margin-top:12px">
+            Search medical library
+          </button>
+
+          <div id="medicalResults" aria-live="polite"></div>
+        </div>
+
+        <div class="panel">
+          <h3 class="minititle">Official medical resources</h3>
+
+          <p class="muted">
+            Follow the original sources for fuller reading
+            and research.
+          </p>
+
+          <div class="linklist">
+            <a href="https://medlineplus.gov/"
+               target="_blank" rel="noopener noreferrer">
+              MedlinePlus — Health information ↗
+            </a>
+
+            <a href="https://pubmed.ncbi.nlm.nih.gov/"
+               target="_blank" rel="noopener noreferrer">
+              PubMed — Medical research ↗
+            </a>
+
+            <a href="https://clinicaltrials.gov/"
+               target="_blank" rel="noopener noreferrer">
+              ClinicalTrials.gov — Clinical studies ↗
+            </a>
+
+            <a href="https://synthetichealth.github.io/synthea/"
+               target="_blank" rel="noopener noreferrer">
+              Synthea — Synthetic patient generator ↗
+            </a>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 class="minititle">Using these references</h3>
+
+          <p class="muted">
+            Health-topic results are educational resources,
+            not diagnoses. The system does not confirm whether
+            a fictional case has a particular condition.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Privacy -->
+    <div class="notice">
+      <strong>Privacy and safety:</strong>
+      This local prototype has no account storage or automatic
+      patient-record backup implemented. Submitted form data
+      is processed by your local FastAPI server; searches send
+      search terms to MedlinePlus. Browser, OS, developer tools,
+      or server logs may still retain information. Do not enter
+      real patient details or rely on results for medical decisions.
+    </div>
+
+    <p class="privacy">
+      © MedInsight · Student research demo ·
+      <strong>Fictional cases only</strong>
+    </p>
+
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+// Navigation
+function page(name) {
+  document.querySelectorAll(".page").forEach(element => {
+    element.classList.toggle("active", element.id === name);
+  });
+
+  document.querySelectorAll(".nav").forEach(element => {
+    element.classList.toggle(
+      "active",
+      element.dataset.page === name
+    );
+  });
+
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function analysis() {
+  page("dashboard");
+  $("welcomeView").classList.add("hidden");
+  $("analysisView").classList.add("active");
+}
+
+function home() {
+  page("dashboard");
+  $("welcomeView").classList.remove("hidden");
+  $("analysisView").classList.remove("active");
+}
+
+document.querySelectorAll(".nav").forEach(button => {
+  button.addEventListener("click", () => {
+    if (button.dataset.page === "dashboard") {
+      home();
+    } else {
+      page(button.dataset.page);
+    }
+  });
+});
+
+$("startAnalysis").addEventListener("click", analysis);
+$("backHome").addEventListener("click", home);
+
+$("openLibrary").addEventListener("click", () => {
+  page("library");
+});
+
+// Synthetic patient loading
+function descriptions(rows) {
+  return [...new Set(
+    rows.map(item => item.DESCRIPTION).filter(Boolean)
+  )].join(", ");
+}
+
+async function loadPatients() {
+  try {
+    const response = await fetch("/patients");
+
+    if (!response.ok) {
+      throw Error("Patient list unavailable");
+    }
+
+    const patients = await response.json();
+
+    $("patientCount").textContent = patients.length;
+
+    for (const patient of patients) {
+      const option = document.createElement("option");
+      option.value = patient.id;
+      option.textContent = patient.name;
+      $("patientSelect").append(option);
+    }
+
+  } catch (error) {
+    $("patientStatus").textContent = error.message;
+    $("patientCount").textContent = "—";
+  }
+}
+
+$("loadPatient").addEventListener("click", async () => {
+  const id = $("patientSelect").value;
+
+  if (!id) {
+    $("patientStatus").textContent = "Choose a patient first.";
+    return;
+  }
+
+  $("patientStatus").textContent = "Loading…";
+
+  try {
+    const response = await fetch(
+      "/patients/" + encodeURIComponent(id)
+    );
+
+    if (!response.ok) {
+      throw Error("Could not load patient record");
+    }
+
+    const data = await response.json();
+
+    $("name").value = data.patient.name;
+
+    if (data.patient.birthdate) {
+      const [year, month, day] =
+        data.patient.birthdate.split("-").map(Number);
+
+      const today = new Date();
+      let age = today.getFullYear() - year;
+
+      if (
+        today.getMonth() + 1 < month ||
+        (
+          today.getMonth() + 1 === month &&
+          today.getDate() < day
+        )
+      ) {
+        age--;
+      }
+
+      $("age").value = Math.max(0, age);
+    }
+
+    $("history").value = descriptions(data.conditions);
+    $("medications").value = descriptions(data.medications);
+    $("allergies").value = descriptions(data.allergies);
+
+    $("symptoms").value = "";
+    $("duration").value = "";
+
+    $("patientStatus").textContent =
+      "Fictional patient loaded.";
+
+  } catch (error) {
+    $("patientStatus").textContent = error.message;
+  }
+});
+
+// Submit case analysis
+$("patientForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const data = {
+    name: $("name").value,
+    age: Number($("age").value),
+    symptoms: $("symptoms").value,
+    duration: $("duration").value,
+    medical_history: $("history").value,
+    medications: $("medications").value,
+    allergies: $("allergies").value
+  };
+
+  $("results").classList.remove("blank");
+  $("results").textContent =
+    "Preparing fictional case report…";
+
+  $("submitButton").disabled = true;
+
+  try {
+    const response = await fetch("/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw Error("Report unavailable");
+    }
+
+    const result = await response.json();
+
+    
+const report = $("results");
+report.replaceChildren();
+
+const heading = document.createElement("h3");
+heading.textContent = "Possible Conditions to Investigate";
+report.appendChild(heading);
+
+const matches = result.possible_conditions || [];
+
+if (matches.length > 0) {
+  matches.forEach((match, index) => {
+    const card = document.createElement("div");
+    card.className = "topic";
+
+    const title = document.createElement("h3");
+    title.textContent =
+      `${index + 1}. ${match.condition}`;
+
+    const details = document.createElement("p");
+    details.textContent =
+      "Matched terms: " +
+      (match.matched_terms || []).join(", ");
+
+    const explanation = document.createElement("p");
+    explanation.textContent =
+      match.explanation || "Educational topic match.";
+
+    card.append(title, details, explanation);
+    report.appendChild(card);
+  });
+} else {
+  const message = document.createElement("p");
+  message.textContent =
+    "No demonstration conditions matched. This does not " +
+    "rule out any medical condition.";
+  report.appendChild(message);
+}
+
+// Keep the original case information below the analysis
+const details = document.createElement("details");
+details.style.marginTop = "25px";
+
+const detailsTitle = document.createElement("summary");
+detailsTitle.textContent = "View Original Patient Information";
+detailsTitle.style.cursor = "pointer";
+detailsTitle.style.fontWeight = "600";
+
+const original = document.createElement("pre");
+original.textContent = result.summary || "";
+original.style.whiteSpace = "pre-wrap";
+original.style.fontFamily = "inherit";
+original.style.fontSize = "13px";
+
+details.append(detailsTitle, original);
+report.appendChild(details);
+
+
+// Expanded medical research results
+const evidenceSection = document.createElement("section");
+evidenceSection.className = "topic";
+
+const evidenceTitle = document.createElement("h3");
+evidenceTitle.textContent = "Expanded Medical Research";
+
+const evidenceStatus = document.createElement("p");
+evidenceStatus.textContent =
+  "Searching additional medical references...";
+
+evidenceSection.append(evidenceTitle, evidenceStatus);
+$("results").appendChild(evidenceSection);
+
+try {
+  const researchResponse = await fetch("/research-case", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+  });
+
+  if (!researchResponse.ok) {
+    throw new Error("Research engine unavailable");
+  }
+
+  const research = await researchResponse.json();
+  evidenceStatus.remove();
+
+  if (!research.matches.length) {
+    const empty = document.createElement("p");
+    empty.textContent =
+      "No reference matches found. This does not rule out any condition.";
+    evidenceSection.appendChild(empty);
+  }
+
+
+// Compact expandable research results
+const researchMatches = research.matches || [];
+
+const list = document.createElement("div");
+list.className = "condition-list";
+
+
+function createConditionCard(match, index) {
+  const card = document.createElement("div");
+  card.className = "condition-card";
+
+  const header = document.createElement("button");
+  header.type = "button";
+  header.className = "condition-header";
+  header.setAttribute("aria-expanded", "false");
+
+  const label = document.createElement("span");
+  label.textContent = match.name || "Medical topic";
+
+  const icon = document.createElement("span");
+  icon.className = "condition-icon";
+  icon.textContent = "+";
+  icon.setAttribute("aria-hidden", "true");
+
+  header.append(label, icon);
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "condition-wrapper";
+  wrapper.setAttribute("aria-hidden", "true");
+
+  const content = document.createElement("div");
+  content.className = "condition-content";
+
+  const description = document.createElement("p");
+  description.textContent =
+    match.description || "No description available.";
+
+  const source = document.createElement("p");
+  source.textContent =
+    "Source: " + (match.source || "Medical reference");
+
+  const terms = document.createElement("p");
+  terms.textContent =
+    "Search terms: " +
+    (match.matched_search_terms || []).join(", ");
+
+  content.append(description, source, terms);
+
+  if (match.url && match.url.startsWith("https://")) {
+    const link = document.createElement("a");
+    link.href = match.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Read original medical reference";
+    content.appendChild(link);
+  }
+
+  wrapper.appendChild(content);
+  card.append(header, wrapper);
+
+  let expanded = false;
+
+  function toggleCard(force) {
+    expanded = typeof force === "boolean"
+      ? force
+      : !expanded;
+
+    card.classList.toggle("expanded", expanded);
+    header.setAttribute("aria-expanded", String(expanded));
+    wrapper.setAttribute("aria-hidden", String(!expanded));
+
+    if (expanded) {
+      wrapper.inert = false;
+      wrapper.style.height = wrapper.scrollHeight + "px";
+    } else {
+      wrapper.inert = true;
+      wrapper.style.height = "0px";
+    }
+  }
+
+  header.addEventListener("click", () => toggleCard());
+
+  wrapper.inert = true;
+
+  // Start the first card expanded
+  if (index === 0) {
+    requestAnimationFrame(() => toggleCard(true));
+  }
+
+  return card;
+}
+
+
+
+researchMatches.slice(0, 3).forEach((match, index) => {
+  list.appendChild(createConditionCard(match, index));
+});
+
+evidenceSection.appendChild(list);
+
+if (researchMatches.length > 3) {
+  const extra = document.createElement("div");
+  extra.className = "condition-list";
+  extra.hidden = true;
+
+  researchMatches.slice(3).forEach((match, index) => {
+    extra.appendChild(
+      createConditionCard(match, index + 3)
+    );
+  });
+
+  const moreButton = document.createElement("button");
+  moreButton.type = "button";
+  moreButton.className = "more-results";
+
+  moreButton.textContent =
+    `Show ${researchMatches.length - 3} more results`;
+
+  moreButton.addEventListener("click", () => {
+    extra.hidden = !extra.hidden;
+
+    moreButton.textContent = extra.hidden
+      ? `Show ${researchMatches.length - 3} more results`
+      : "Show fewer results";
+  });
+
+  evidenceSection.append(extra, moreButton);
+}
+
+
+  // Display research limitations
+  const note = document.createElement("p");
+  note.className = "muted";
+  note.textContent = research.note ||
+    "Educational reference matches only, not diagnoses.";
+  evidenceSection.appendChild(note);
+
+  // Display any database errors
+  if (research.warnings?.length) {
+    const warning = document.createElement("p");
+    warning.className = "muted";
+    warning.textContent =
+      "Some sources were unavailable: " +
+      research.warnings.join(" ");
+    evidenceSection.appendChild(warning);
+  }
+
+} catch (researchError) {
+  evidenceStatus.textContent =
+    "Expanded research unavailable: " +
+    researchError.message;
+}
+
+} catch (error) {
+  $("results").textContent =
+    "Could not generate report: " + error.message;
+
+} finally {
+  $("submitButton").disabled = false;
+}
+
+});
+
+
+
+async function topicSearch(inputId, resultsId) {
+  const term = $(inputId).value.trim();
+  const output = $(resultsId);
+
+  if (term.length < 2) {
+    output.textContent = "Enter at least two characters.";
+    return;
+  }
+
+  output.textContent = "Searching MedlinePlus…";
+
+  try {
+    const response = await fetch(
+      "/medical-topics?search=" + encodeURIComponent(term)
+    );
+
+    if (!response.ok) {
+      throw new Error("Medical reference search unavailable");
+    }
+
+    const data = await response.json();
+    output.replaceChildren();
+
+    if (!data.topics?.length) {
+      output.textContent = "No matching topics found.";
+      return;
+    }
+
+    for (const topic of data.topics) {
+      const card = document.createElement("article");
+      card.className = "topic";
+
+      const heading = document.createElement("h3");
+      heading.textContent = topic.title || "Medical topic";
+
+      const description = document.createElement("p");
+      description.textContent =
+        topic.summary || "No summary available.";
+
+      card.append(heading, description);
+
+      if (topic.url?.startsWith("https://")) {
+        const link = document.createElement("a");
+        link.href = topic.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Read original medical reference";
+        card.appendChild(link);
+      }
+
+      output.appendChild(card);
+    }
+  } catch (error) {
+    output.textContent = error.message;
+  }
+}
+
+// Connect search buttons
+$("quickSearchButton").addEventListener("click", () => {
+  topicSearch("quickSearch", "quickResults");
+});
+
+$("searchMedical").addEventListener("click", () => {
+  topicSearch("medicalSearch", "medicalResults");
+});
+
+// Initialize
+loadPatients();
+</script>
+
+</body>
+</html>
