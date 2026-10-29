@@ -1,63 +1,111 @@
-# 🩺 MedInsight AI
+# MedInsight AI
 
-### An Educational Medical Research & Case Exploration Platform
+**An Educational Medical Research & Case Exploration Platform**
 
-**MedInsight AI** is a student-developed web application designed to make medical research more accessible, organized, and interactive.
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_MedInsight-0B8285?style=for-the-badge)](https://medinsight-ai-e7ps.onrender.com)
+[![Python](https://img.shields.io/badge/Python-Backend-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
-The platform allows users to explore fictional patient cases, identify relevant medical research topics, and retrieve information from established health-information sources—all within a streamlined interface.
-
-Built with Python, FastAPI, HTML, CSS, and JavaScript, MedInsight AI combines structured case intake, synthetic patient records, and medical reference retrieval into one educational workspace.
-
-> **Disclaimer:** MedInsight AI is an educational prototype. It does not provide medical diagnoses, treatment recommendations, clinical risk assessments, or professional medical advice. Use fictional patient information only.
+**[Live Website](https://medinsight-ai-e7ps.onrender.com) · [Source Code](https://github.com/jaivenk/medinsight-ai)**
 
 ---
 
+## Overview
+
+MedInsight AI is an independent student-developed web application exploring the intersection of medicine, biology, and software engineering.
+
+The platform provides an interactive environment for exploring fictional patient cases, organizing symptom information, and retrieving educational medical references from established information sources.
+
+Rather than attempting to diagnose patients, MedInsight AI focuses on making medical information easier to explore and understand through structured case reports, research-topic matching, and accessible presentation.
+
+The application is built using **Python, FastAPI, HTML, CSS, and JavaScript**, and is deployed as a publicly accessible web service.
+
+> **Important:** MedInsight AI is an educational research prototype, not a diagnostic tool or a clinically validated AI system. It does not provide diagnoses, disease probabilities, treatment recommendations, or medical advice. Do not enter real patient information.
+
 ## Features
 
-### 1. Fictional Patient Case Analysis
-- Enter fictional patient demographics, symptoms, and medical history.
-- Record medications, allergies, and symptom duration.
-- Generate an organized educational case report.
-- Identify example condition topics through keyword-based matching.
+### Fictional Patient Case Analysis
 
-### 2. Multi-Source Medical Research
-- Retrieve medical reference information from NIH MedlinePlus.
-- Search condition terminology through NLM Clinical Tables.
-- Explore relevant research topics associated with case descriptions.
-- View expandable condition cards with supporting information.
+- Structured intake for fictional patient names, ages, symptoms, symptom duration, medical history, medications, and allergies.
+- Educational keyword-based condition matching.
+- Generated reports summarizing fictional case information.
+- Research-topic suggestions based on provided descriptions.
 
-### 3. Synthetic Patient Integration
-- Browse fictional patient records generated using Synthea.
-- Load synthetic demographics and medical histories.
-- Explore sample conditions, medications, and allergies.
-- Work with realistic but artificially generated patient scenarios.
+### Multi-Source Medical Research
 
-### 4. Integrated Medical Library
-- Search MedlinePlus health topics directly from the application.
-- Access external medical reference resources, including PubMed and ClinicalTrials.gov.
-- Explore health information without requiring a user account.
+- MedlinePlus integration for health information from the U.S. National Library of Medicine.
+- NLM Clinical Tables integration for medical terminology lookup.
+- Research-result organization with expandable condition cards.
+- On-demand searches of external reference services.
 
-### 5. Interactive User Interface
-- Responsive dashboard with a modern teal-and-navy design.
-- Expandable research results and interactive components.
-- Dedicated fictional case workspace and medical library.
-- Custom medical-themed branding.
+### Synthetic Patient Records
+
+- Optional integration with Synthea-generated fictional patient data.
+- Patient selection and demographic information retrieval.
+- Access to synthetic conditions, medication records, and allergies.
+- Support for structured exploration of simulated medical histories.
+
+*Note: Synthea CSV datasets are stored locally and are not included in the public repository. This feature requires additional data configuration in deployed environments.*
+
+### Medical Library
+
+- Search health topics using MedlinePlus.
+- Review short research summaries.
+- Open original references for additional reading.
+- Access PubMed, ClinicalTrials.gov, and other educational resources.
+
+### Interactive Dashboard
+
+- Responsive interface with teal-and-navy branding.
+- Dedicated case-analysis workspace.
+- Expandable research results.
+- Interactive source information and navigation.
+- No account creation required.
 
 ---
 
 ## Technology Stack
 
-| Component | Technology |
+| Layer | Technology |
 |---|---|
 | Backend | Python, FastAPI |
 | ASGI Server | Uvicorn |
-| Frontend | HTML, CSS, JavaScript |
-| Medical Information | NIH MedlinePlus |
-| Medical Terminology | NLM Clinical Tables |
-| Synthetic Patient Data | Synthea |
-| Version Control | Git and GitHub |
+| Frontend | HTML5, CSS3, JavaScript |
+| Health Information | NIH MedlinePlus |
+| Terminology Search | NLM Clinical Tables |
+| Synthetic Data | Synthea |
+| Version Control | Git, GitHub |
+| Deployment | Render |
 
----
+## System Architecture
+
+```text
+                  USER
+                    |
+                    v
+          MedInsight Web Interface
+            HTML / CSS / JS
+                    |
+                    v
+             FastAPI Backend
+                    |
+          +---------+---------+
+          |         |         |
+          v         v         v
+       Case      Research   Synthetic
+      Analysis    Engine    Patient Data
+          |         |         |
+          v         v         v
+       Keyword   MedlinePlus  Synthea
+       Matching  NLM Tables   CSV Files
+          |         |         |
+          +---------+---------+
+                    |
+                    v
+          Educational Results
+```
+
+The backend exposes endpoints for fictional case analysis, medical reference retrieval, health-topic lookup, and synthetic patient records.
 
 ## Project Structure
 
@@ -68,22 +116,19 @@ medinsight-ai/
 │   ├── research_engine.py
 │   ├── index.html
 │   ├── favicon.svg
-│   └── data/                  # Local synthetic patient CSV files
+│   ├── requirements.txt
+│   └── data/                 # Local synthetic datasets
 ├── .gitignore
 └── README.md
 ```
 
-The `backend/data/` directory is excluded from the repository. Synthetic datasets must be generated or obtained separately.
-
----
-
 ## Getting Started
 
-### Prerequisites
+### Requirements
 
-- Python 3.10 or later
+- Python 3.10+
 - pip
-- Internet connection for medical reference searches
+- Internet access for external medical references
 
 ### 1. Clone the repository
 
@@ -92,94 +137,107 @@ git clone https://github.com/jaivenk/medinsight-ai.git
 cd medinsight-ai/backend
 ```
 
-### 2. Create a virtual environment
+### 2. Create and activate a virtual environment
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
+On Windows, activate with:
+
+```powershell
+.venv\Scripts\activate
+```
+
 ### 3. Install dependencies
 
 ```bash
-pip install fastapi "uvicorn[standard]"
+pip install -r requirements.txt
 ```
 
-### 4. Run the application
+### 4. Start the server
 
 ```bash
 uvicorn main:app --reload
 ```
 
-Open **http://127.0.0.1:8000** in your browser.
+Visit **http://127.0.0.1:8000**.
 
-### 5. Optional: Add synthetic patient data
+Alternatively, use the **[Live Demo](https://medinsight-ai-e7ps.onrender.com)** without installing anything.
 
-Generate or download synthetic CSV records from [Synthea](https://github.com/synthetichealth/synthea).
+### Optional: Synthetic Patient Data
 
-Place the relevant files inside `backend/data/`, including:
+Generate synthetic patient data using [Synthea](https://github.com/synthetichealth/synthea), then place the required CSV files inside `backend/data/`.
 
-- `patients.csv`
-- `conditions.csv`
-- `medications.csv`
-- `allergies.csv`
+The patient-loading functionality expects files including `patients.csv`, `conditions.csv`, `medications.csv`, and `allergies.csv`.
 
-These files are needed for the synthetic patient loading feature. Other parts of the application can operate without them.
+These datasets are excluded from version control. The public deployment may not have this feature configured.
 
 ---
 
-## How It Works
+## How the Research Engine Works
 
-1. **Case intake:** The user enters fictional case details or loads a synthetic patient.
-2. **Educational matching:** The backend identifies example condition-topic matches using predefined terminology rules.
-3. **Reference retrieval:** The research engine searches external medical information sources.
-4. **Results presentation:** The frontend organizes returned research topics into expandable cards and reports.
+**1. Case intake:** A user enters details for a fictional patient or selects a synthetic record.
 
-The system does not establish a diagnosis or calculate a clinically validated probability of disease.
+**2. Topic matching:** The application identifies example condition topics using predefined symptom keywords and terminology matching.
 
----
+**3. Reference retrieval:** The backend requests information from MedlinePlus and NLM Clinical Tables.
+
+**4. Results presentation:** Relevant reference matches are organized into readable reports and expandable research cards.
+
+**5. Further exploration:** Users can search additional topics and visit original medical references.
+
+Research matches are informational associations rather than clinically validated predictions. The system does not calculate diagnostic probabilities or establish that a patient has any particular medical condition.
+
+## Deployment
+
+MedInsight AI is deployed using **Render**, with source code maintained on GitHub.
+
+The hosted application runs FastAPI as a cloud web service, allowing users to access the interface without installing Python or operating a local server.
+
+**Live application:** https://medinsight-ai-e7ps.onrender.com
+
+The service uses Render's free hosting tier, so initial requests may be delayed after periods of inactivity.
 
 ## Current Limitations
 
-- Research matches are not clinically validated.
-- The application does not currently include a trained diagnostic machine-learning model.
-- The system relies on the availability of external medical reference services.
-- Synthetic patient datasets are not distributed with the repository.
-- There is no authentication system or persistent case database.
-- The application is intended for local development and educational experimentation.
+- No trained medical diagnostic machine-learning model.
+- No clinical validation or diagnostic accuracy benchmarking.
+- No user authentication or persistent patient database.
+- External research searches depend on third-party service availability.
+- Public deployment does not currently include the local synthetic patient datasets.
+- Not intended for healthcare decision-making or use with identifiable patient data.
+
+## Development Roadmap
+
+- [ ] Expand medical terminology matching and result ranking
+- [ ] Improve reference transparency and research citations
+- [ ] Add automated backend and frontend tests
+- [ ] Configure synthetic patient datasets for cloud deployment
+- [ ] Improve mobile accessibility and responsiveness
+- [ ] Introduce more advanced research filtering
+- [ ] Add example cases and interface screenshots
+- [ ] Explore clinically informed evaluation methods for educational research matching
 
 ---
 
-## Future Development
+## Motivation
 
-Potential improvements include:
+MedInsight AI began as an independent project motivated by an interest in medicine, biology, and the potential for software based medical care within a new age. 
 
-- [ ] More advanced medical terminology matching
-- [ ] Improved relevance ranking and research citations
-- [ ] Better search filtering and source transparency
-- [ ] Automated testing and validation
-- [ ] Deployment to a public hosting platform
-- [ ] Expanded synthetic patient case exploration
-- [ ] Improved mobile accessibility
+The project serves as a practical exploration of API integration, backend development, frontend interaction, research retrieval, and deployment.
 
----
-
-## Project Purpose
-
-MedInsight AI was created as an independent student software project exploring the intersection of biology, medicine, and computer science.
-
-Its goal is to demonstrate how software can organize fictional clinical information and connect users with credible medical reference material through an accessible interface.
-
-The project is under active development.
-
----
+It is an evolving educational platform intended to support learning and experimentation.
 
 ## Developer
 
-**Jai Venkamsetty**
+**Jai S. Venkamsetty**
 
 GitHub: [@jaivenk](https://github.com/jaivenk)
 
 ---
 
-**MedInsight AI — Research, exploration, and learning.**
+*MedInsight AI is an independent educational project. It is not affiliated with or endorsed by the National Institutes of Health, the National Library of Medicine, or Synthea.*
+
+**Built for research, exploration, and learning.**
