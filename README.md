@@ -6,6 +6,8 @@
 [![Python](https://img.shields.io/badge/Python-Backend-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
+[![Backend Tests](https://github.com/jaivenk/medinsight-ai/actions/workflows/python-tests.yml/badge.svg)](https://github.com/jaivenk/medinsight-ai/actions/workflows/python-tests.yml)
+
 **[Live Website](https://medinsight-ai-e7ps.onrender.com) · [Source Code](https://github.com/jaivenk/medinsight-ai)**
 
 ---
