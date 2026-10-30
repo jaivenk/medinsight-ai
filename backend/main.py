@@ -2,6 +2,7 @@
 import html
 import csv
 from research_engine import router as research_router
+from differential_engine import router as differential_router
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import urlopen
@@ -13,6 +14,7 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(title="MedInsight AI", version="0.3.0")
 app.include_router(research_router)
+app.include_router(differential_router)
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
@@ -307,9 +309,10 @@ def medical_topics(
 
     except Exception:
         raise HTTPException(
-            status_code=502,
+            status_code=502,    
             detail="MedlinePlus service unavailable"
         )
+
 
 @app.get("/favicon.svg", include_in_schema=False)
 def favicon():
@@ -318,3 +321,4 @@ def favicon():
         favicon_path,
         media_type="image/svg+xml"
     )
+

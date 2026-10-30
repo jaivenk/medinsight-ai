@@ -1041,6 +1041,243 @@ a.brand-logo:focus-visible {
   z-index: 1;
 }
 
+/* Case creation mode selector */
+
+.case-mode-panel {
+  margin-bottom: 20px;
+}
+
+.case-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.case-mode-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+
+  padding: 22px;
+  text-align: left;
+  color: var(--ink);
+
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid #dce9ed;
+  border-radius: 17px;
+
+  transition:
+    transform .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.case-mode-option:hover {
+  transform: translateY(-3px);
+  background: #f3fcfb;
+}
+
+.case-mode-option.selected {
+  border: 2px solid #159e9b;
+  background: linear-gradient(135deg, #edfbf8, #fff);
+  box-shadow: 0 8px 25px rgba(11, 130, 133, .09);
+}
+
+.case-mode-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #dff5f1;
+  color: #087b80;
+  font-size: 23px;
+}
+
+.case-mode-option strong {
+  font-size: 15px;
+}
+
+.case-mode-option small {
+  color: #667f88;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .case-mode-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Pseudo-diagnosis research explorer */
+
+.research-explorer {
+  margin: 20px 0 16px;
+  padding: 17px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(229, 249, 246, .94),
+    rgba(255, 255, 255, .9)
+  );
+
+  border: 1px solid #cdebe5;
+}
+
+.research-explorer input {
+  background: rgba(255, 255, 255, .95);
+  border-radius: 12px;
+}
+
+.research-explorer .muted {
+  margin: 10px 0 0;
+  font-size: 12px;
+}
+
+.condition-list[hidden],
+.more-results[hidden] {
+  display: none !important;
+}
+
+/* Educational pseudo-diagnosis explorer */
+
+.differential-panel {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.differential-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.differential-heading h3 {
+  margin: 8px 0;
+  font-size: 21px;
+  letter-spacing: -.5px;
+}
+
+.differential-label {
+  padding: 7px 11px;
+  border-radius: 20px;
+  background: #e7f7f3;
+  color: #087e80;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.differential-summary {
+  margin: 18px 0;
+  padding: 15px;
+  background: linear-gradient(135deg, #e7faf6, #f8fdfd);
+  border: 1px solid #cce9e3;
+  border-radius: 14px;
+  font-size: 13px;
+  color: #365e68;
+}
+
+.differential-card {
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid #d7e8e8;
+  border-radius: 16px;
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 5px 18px rgba(21,69,83,.04);
+}
+
+.differential-card summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 17px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.differential-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.differential-card summary::after {
+  content: "+";
+  margin-left: auto;
+  color: #087e80;
+  font-size: 23px;
+}
+
+.differential-card[open] summary::after {
+  content: "−";
+}
+
+.differential-number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 33px;
+  height: 33px;
+  background: #ddf4f0;
+  color: #087e80;
+  border-radius: 10px;
+  font-weight: 750;
+}
+
+.differential-card-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.differential-card-body {
+  padding: 0 18px 18px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.differential-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 10px 0 17px;
+}
+
+.differential-chip {
+  background: #e6f7f0;
+  color: #26755f;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.differential-question {
+  padding: 12px;
+  background: #f3f8fa;
+  border-radius: 11px;
+  color: #526d79;
+}
+
+.differential-card a {
+  display: inline-block;
+  margin-top: 13px;
+  color: #087e80;
+  font-weight: 650;
+}
+
+@media (max-width: 700px) {
+  .differential-heading {
+    flex-direction: column;
+  }
+}
+
 </style>
 </head>
 
@@ -1263,10 +1500,38 @@ a.brand-logo:focus-visible {
           create an educational research report.
         </p>
 
+<div class="panel case-mode-panel">
+  <h3 class="minititle">Choose your starting point</h3>
+  <p class="muted">
+    Build your own fictional scenario or start with
+    a Synthea-generated patient record.
+  </p>
+
+  <div class="case-mode-grid">
+    <button type="button"
+            class="case-mode-option selected"
+            id="customMode"
+            aria-pressed="true">
+      <span class="case-mode-icon">✎</span>
+      <strong>Create a scenario</strong>
+      <small>Start with an empty patient intake form.</small>
+    </button>
+
+    <button type="button"
+            class="case-mode-option"
+            id="syntheaMode"
+            aria-pressed="false">
+      <span class="case-mode-icon">✚</span>
+      <strong>Load a synthetic patient</strong>
+      <small>Use Synthea records as your starting point.</small>
+    </button>
+  </div>
+</div>
+
         <div class="layout">
           <div class="stack">
 
-            <div class="panel">
+            <div class="panel hidden" id="syntheaPanel">
               <h3 class="minititle">Load a synthetic patient</h3>
               <p class="muted">
                 Optional: populate fields using
@@ -1342,6 +1607,15 @@ a.brand-logo:focus-visible {
                   Generate research report ↗
                 </button>
 
+<button
+  class="btn secondary"
+  id="runDifferential"
+  type="button"
+  style="margin-top:12px; width:100%;">
+  ✚ Explore pseudo-diagnosis
+</button>
+
+
               </form>
             </div>
           </div>
@@ -1349,7 +1623,7 @@ a.brand-logo:focus-visible {
           <div class="stack">
 
             <div class="panel">
-              <h3 class="minititle">Case analysis report</h3>
+              <h3 class="minititle">Educational Pseudo-Diagnosis</h3>
 
               <p class="muted">
                 Shows reported details and example condition-topic
@@ -1360,6 +1634,32 @@ a.brand-logo:focus-visible {
                    aria-live="polite">
                 Your report will appear here.
               </div>
+
+<div id="differentialPanel"
+     class="differential-panel hidden">
+
+  <div class="differential-heading">
+    <div>
+      <span class="eyebrow">Educational case exploration</span>
+      <h3>Pseudo-Diagnosis Explorer</h3>
+    </div>
+    <span class="differential-label">
+      Research simulation
+    </span>
+  </div>
+
+  <p class="muted">
+    Explore possible condition topics supported by the
+    fictional case details. Results are not diagnoses.
+  </p>
+
+  <p id="differentialStatus"
+     class="status"
+     aria-live="polite"></p>
+
+  <div id="differentialResults"></div>
+</div>
+
             </div>
 
             <div class="panel">
@@ -1533,6 +1833,44 @@ $("openLibrary").addEventListener("click", () => {
   page("library");
 });
 
+// Select how to create a fictional case
+const customModeButton = $("customMode");
+const syntheaModeButton = $("syntheaMode");
+
+function setCaseMode(mode) {
+  const isCustom = mode === "custom";
+
+  customModeButton.classList.toggle("selected", isCustom);
+  syntheaModeButton.classList.toggle("selected", !isCustom);
+
+  customModeButton.setAttribute("aria-pressed", String(isCustom));
+  syntheaModeButton.setAttribute("aria-pressed", String(!isCustom));
+
+  $("syntheaPanel").classList.toggle("hidden", isCustom);
+
+  if (isCustom) {
+    $("patientForm").reset();
+    $("patientSelect").value = "";
+    $("patientStatus").textContent = "";
+
+    const results = $("results");
+    results.replaceChildren();
+    results.textContent = "Your report will appear here.";
+    results.classList.add("blank");
+
+    if ($("quickSearch")) $("quickSearch").value = "";
+    if ($("quickResults")) $("quickResults").replaceChildren();
+  }
+}
+
+customModeButton.addEventListener("click", () => {
+  setCaseMode("custom");
+});
+
+syntheaModeButton.addEventListener("click", () => {
+  setCaseMode("synthetic");
+});
+
 // Synthetic patient loading
 function descriptions(rows) {
   return [...new Set(
@@ -1663,7 +2001,7 @@ const report = $("results");
 report.replaceChildren();
 
 const heading = document.createElement("h3");
-heading.textContent = "Possible Conditions to Investigate";
+heading.textContent = "Initial Symptom Matches";
 report.appendChild(heading);
 
 const matches = result.possible_conditions || [];
@@ -1721,7 +2059,7 @@ const evidenceSection = document.createElement("section");
 evidenceSection.className = "topic";
 
 const evidenceTitle = document.createElement("h3");
-evidenceTitle.textContent = "Expanded Medical Research";
+evidenceTitle.textContent = "Pseudo-Diagnosis Research Explorer";
 
 const evidenceStatus = document.createElement("p");
 evidenceStatus.textContent =
@@ -1882,6 +2220,101 @@ if (researchMatches.length > 3) {
 }
 
 
+// Search within all retrieved research matches
+const explorer = document.createElement("div");
+explorer.className = "research-explorer";
+
+const searchLabel = document.createElement("label");
+searchLabel.textContent = "Filter retrieved conditions";
+searchLabel.className = "fieldlabel";
+
+const filterInput = document.createElement("input");
+filterInput.type = "search";
+filterInput.placeholder = "Search condition, symptom, or source...";
+filterInput.setAttribute(
+  "aria-label",
+  "Filter pseudo-diagnosis research results"
+);
+
+const matchCount = document.createElement("p");
+matchCount.className = "muted";
+matchCount.textContent =
+  `${researchMatches.length} reference matches retrieved`;
+
+const filteredList = document.createElement("div");
+filteredList.className = "condition-list";
+filteredList.hidden = true;
+
+explorer.append(searchLabel, filterInput, matchCount);
+
+evidenceSection.insertBefore(explorer, list);
+evidenceSection.insertBefore(filteredList, list);
+
+// Existing original results
+const originalList = list;
+const extraList = evidenceSection.querySelector(
+  ".condition-list[hidden]"
+);
+const showMoreButton = evidenceSection.querySelector(
+  ".more-results"
+);
+
+filterInput.addEventListener("input", () => {
+  const query = filterInput.value.trim().toLowerCase();
+
+  if (!query) {
+    filteredList.hidden = true;
+    filteredList.replaceChildren();
+    originalList.hidden = false;
+
+    if (extraList) extraList.hidden = true;
+    if (showMoreButton) {
+      showMoreButton.hidden = false;
+      showMoreButton.textContent =
+        `Show ${researchMatches.length - 3} more results`;
+    }
+
+    matchCount.textContent =
+      `${researchMatches.length} reference matches retrieved`;
+    return;
+  }
+
+  originalList.hidden = true;
+  if (extraList) extraList.hidden = true;
+  if (showMoreButton) showMoreButton.hidden = true;
+
+  const filtered = researchMatches.filter(match => {
+    const searchableText = [
+      match.name,
+      match.description,
+      match.source,
+      ...(match.matched_search_terms || [])
+    ].join(" ").toLowerCase();
+
+    return searchableText.includes(query);
+  });
+
+  filteredList.replaceChildren();
+  filteredList.hidden = false;
+
+  filtered.forEach((match, index) => {
+    filteredList.appendChild(
+      createConditionCard(match, index)
+    );
+  });
+
+  matchCount.textContent =
+    `${filtered.length} of ${researchMatches.length} matches`;
+
+  if (!filtered.length) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.className = "muted";
+    emptyMessage.textContent =
+      "No retrieved references match this search.";
+    filteredList.appendChild(emptyMessage);
+  }
+});
+
   // Display research limitations
   const note = document.createElement("p");
   note.className = "muted";
@@ -1985,6 +2418,156 @@ $("searchMedical").addEventListener("click", () => {
 
 // Initialize
 loadPatients();
+
+// Educational pseudo-diagnosis explorer
+
+const differentialButton = $("runDifferential");
+
+function makeDifferentialCard(condition, index) {
+  const card = document.createElement("details");
+  card.className = "differential-card";
+
+  const summary = document.createElement("summary");
+
+  const number = document.createElement("span");
+  number.className = "differential-number";
+  number.textContent = index + 1;
+
+  const title = document.createElement("span");
+  title.className = "differential-card-title";
+  title.textContent = condition.name;
+
+  summary.append(number, title);
+  card.appendChild(summary);
+
+  const body = document.createElement("div");
+  body.className = "differential-card-body";
+
+  const supportingTitle = document.createElement("strong");
+  supportingTitle.textContent = "Supporting case features";
+  body.appendChild(supportingTitle);
+
+  const chips = document.createElement("div");
+  chips.className = "differential-chips";
+
+  for (const feature of condition.supporting_features) {
+    const chip = document.createElement("span");
+    chip.className = "differential-chip";
+    chip.textContent = feature;
+    chips.appendChild(chip);
+  }
+
+  body.appendChild(chips);
+
+  const questionTitle = document.createElement("strong");
+  questionTitle.textContent = "What would help distinguish it?";
+  body.appendChild(questionTitle);
+
+  const question = document.createElement("p");
+  question.className = "differential-question";
+  question.textContent = condition.follow_up_question;
+  body.appendChild(question);
+
+  const reference = document.createElement("a");
+  reference.href = condition.reference_url;
+  reference.target = "_blank";
+  reference.rel = "noopener noreferrer";
+  reference.textContent = "Explore MedlinePlus references ↗";
+  body.appendChild(reference);
+
+  card.appendChild(body);
+
+  return card;
+}
+
+async function runDifferentialAnalysis() {
+  const symptoms = $("symptoms").value.trim();
+  const age = Number($("age").value);
+
+  if (!$("age").value || !symptoms) {
+    $("differentialPanel").classList.remove("hidden");
+    $("differentialStatus").textContent =
+      "Enter a fictional age and symptoms first.";
+    return;
+  }
+
+  const payload = {
+    age,
+    symptoms,
+    duration: $("duration").value.trim(),
+    medical_history: $("history").value.trim()
+  };
+
+  const panel = $("differentialPanel");
+  const status = $("differentialStatus");
+  const container = $("differentialResults");
+
+  panel.classList.remove("hidden");
+  container.replaceChildren();
+
+  differentialButton.disabled = true;
+  status.textContent = "Analyzing fictional case features...";
+
+  try {
+    const response = await fetch("/differential-case", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    status.textContent = "";
+
+    const overview = document.createElement("div");
+    overview.className = "differential-summary";
+    overview.textContent =
+      `${data.condition_count} educational condition topics ` +
+      `identified from ${data.database_size} example profiles. ` +
+      `Ordering reflects matched features, not disease likelihood.`;
+
+    container.appendChild(overview);
+
+    if (data.conditions.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "muted";
+      empty.textContent = data.message;
+      container.appendChild(empty);
+    }
+
+    data.conditions.forEach((condition, index) => {
+      container.appendChild(
+        makeDifferentialCard(condition, index)
+      );
+    });
+
+    const disclaimer = document.createElement("p");
+    disclaimer.className = "muted";
+    disclaimer.style.fontSize = "12px";
+    disclaimer.style.marginTop = "18px";
+    disclaimer.textContent = data.disclaimer;
+
+    container.appendChild(disclaimer);
+
+  } catch (error) {
+    status.textContent =
+      `Pseudo-diagnosis explorer unavailable: ${error.message}`;
+  } finally {
+    differentialButton.disabled = false;
+  }
+}
+
+differentialButton.addEventListener(
+  "click",
+  runDifferentialAnalysis
+);
+
 </script>
 
 </body>
