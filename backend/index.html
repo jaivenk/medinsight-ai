@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MedInsight | CliniCare Bay</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=8">
 
 
 
@@ -465,6 +465,21 @@ textarea {
   align-items: center;
   gap: 9px;
 }
+
+/* Clickable MedInsight home logo */
+a.brand-logo {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    width: fit-content;
+}
+
+a.brand-logo:focus-visible {
+    outline: 2px solid #6fe2d5;
+    outline-offset: 6px;
+    border-radius: 6px;
+}
+
 
 .brand-logo svg {
   flex-shrink: 0;
@@ -965,6 +980,67 @@ textarea {
 }
 
 
+/* MedInsight sidebar — ambient gradient and cross pattern */
+
+.side {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 95% 85%,
+      rgba(58, 183, 173, 0.22),
+      transparent 55%
+    ),
+    linear-gradient(
+      160deg,
+      #0d2937 0%,
+      #174550 52%,
+      #102d3b 100%
+    );
+}
+
+/* Repeating medical crosses */
+.side::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76' viewBox='0 0 76 76'%3E%3Cg fill='%239be5dc' fill-opacity='.10'%3E%3Cpath d='M34 24h8v10h10v8H42v10h-8V42H24v-8h10z'/%3E%3C/g%3E%3Cpath d='M38 15v5M38 56v5M15 38h5M56 38h5' stroke='%239be5dc' stroke-opacity='.08' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+
+  background-size: 76px 76px;
+  background-repeat: repeat;
+
+  opacity: 0.45;
+  transform: rotate(-12deg) scale(1.2);
+  transform-origin: center;
+}
+
+/* A faint glass highlight near the top */
+.side::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.045),
+    transparent 42%,
+    rgba(53, 204, 190, 0.04)
+  );
+}
+
+/* Keep navigation and branding clearly above the pattern */
+.side > * {
+  position: relative;
+  z-index: 1;
+}
+
 </style>
 </head>
 
@@ -974,7 +1050,7 @@ textarea {
   <!-- Sidebar -->
   <aside class="side" aria-label="Main navigation">
    
-<div class="logo brand-logo">
+<a class="logo brand-logo" href="/" aria-label="Return to MedInsight homepage">
   <svg
     width="43"
     height="43"
@@ -1015,7 +1091,7 @@ textarea {
   </svg>
 
   <span>Med<em>Insight</em></span>
-</div>
+</a>
 
 
     <button class="nav active" data-page="dashboard">
