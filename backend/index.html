@@ -4,7 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MedInsight | CliniCare Bay</title>
+<title>MedInsight | Home</title>
+<script>
+// The interface needs FastAPI; opening this file directly cannot call its routes.
+if (window.location.protocol === "file:") {
+  window.location.replace("http://127.0.0.1:8000/" + window.location.hash);
+}
+</script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=8">
 
 
@@ -183,6 +189,8 @@ a { color: #08777b; }
 }
 
 .hero p { max-width: 550px; }
+
+.hero > div:first-child { min-width: 0; }
 
 .heroart {
   border-radius: 25px;
@@ -435,7 +443,9 @@ textarea {
 /* Mobile */
 
 @media(max-width:1000px) {
-  .hero { grid-template-columns: 1fr; }
+  .hero {
+    grid-template-columns: 1fr;
+  }
   .heroart { display: none; }
   .layout { grid-template-columns: 1fr; }
 }
@@ -1041,77 +1051,6 @@ a.brand-logo:focus-visible {
   z-index: 1;
 }
 
-/* Case creation mode selector */
-
-.case-mode-panel {
-  margin-bottom: 20px;
-}
-
-.case-mode-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.case-mode-option {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 9px;
-
-  padding: 22px;
-  text-align: left;
-  color: var(--ink);
-
-  background: rgba(255, 255, 255, .72);
-  border: 1px solid #dce9ed;
-  border-radius: 17px;
-
-  transition:
-    transform .25s ease,
-    background .25s ease,
-    border-color .25s ease,
-    box-shadow .25s ease;
-}
-
-.case-mode-option:hover {
-  transform: translateY(-3px);
-  background: #f3fcfb;
-}
-
-.case-mode-option.selected {
-  border: 2px solid #159e9b;
-  background: linear-gradient(135deg, #edfbf8, #fff);
-  box-shadow: 0 8px 25px rgba(11, 130, 133, .09);
-}
-
-.case-mode-icon {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: #dff5f1;
-  color: #087b80;
-  font-size: 23px;
-}
-
-.case-mode-option strong {
-  font-size: 15px;
-}
-
-.case-mode-option small {
-  color: #667f88;
-  line-height: 1.5;
-}
-
-@media (max-width: 700px) {
-  .case-mode-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* Pseudo-diagnosis research explorer */
 
 .research-explorer {
@@ -1278,6 +1217,186 @@ a.brand-logo:focus-visible {
   }
 }
 
+/* Analyzer workspace and shared accessibility polish */
+.main { min-width: 0; }
+:focus-visible { outline: 3px solid #159e9b; outline-offset: 4px; }
+.analyzer-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(240px, .85fr); gap: 22px; align-items: start; }
+.analyzer-intro { max-width: 680px; }
+.analyzer-examples { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0 24px; }
+.analyzer-examples button { border: 1px solid #cce3e2; border-radius: 20px; padding: 8px 12px; color: #23606a; background: #f2faf8; font-size: 12px; }
+.analyzer-consent { display: flex; gap: 10px; align-items: flex-start; margin: 20px 0; font-size: 13px; line-height: 1.6; }
+.analyzer-consent input { width: auto; margin-top: 5px; }
+.analyzer-result { margin-top: 22px; line-height: 1.75; overflow-wrap: anywhere; }
+.analyzer-result:empty { display: none; }
+.analyzer-result .topic { margin-top: 14px; }
+.analyzer-result blockquote { margin: 12px 0; padding-left: 14px; border-left: 3px solid #a6d8d1; color: #45616c; font-size: 14px; }
+.analyzer-result a { margin-right: 12px; }
+.analyzer-guide ol { padding-left: 20px; line-height: 1.9; color: var(--sub); }
+#analyzerStatus { min-height: 24px; }
+@media (max-width: 1000px) { .analyzer-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+/* Quiet home and patient research portraits */
+:root { --ease-calm: cubic-bezier(.42, 0, .22, 1); }
+.home-intro { display:flex; justify-content:space-between; align-items:center; gap:28px; padding:28px 4px 12px; }
+.home-intro h3 { margin:10px 0 8px; font-size:23px; letter-spacing:-.6px; }
+.home-intro p { max-width:570px; margin:0; font-size:14px; }
+.home-intro .btn { flex-shrink:0; }
+.home-footnote { display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; margin:24px 4px 8px; color:var(--sub); font-size:12px; }
+.home-footnote a { font-weight:600; text-decoration:none; }
+.analyzer-caption { display:inline-block; margin-left:8px; font-size:13px; letter-spacing:0; color:var(--sub); vertical-align:middle; font-weight:500; }
+fieldset { min-width:0; margin:0; padding:0; border:0; }
+fieldset:disabled { opacity:.48; }
+input[readonly] { background:#f1f6f6; color:#526d79; }
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.patient-identity { display:flex; align-items:center; gap:22px; background:linear-gradient(130deg,#edf9f5,#f9fcfb); }
+.patient-identity h3 { font-size:23px; letter-spacing:-.6px; margin:9px 0; overflow-wrap:anywhere; }
+.patient-identity p { margin:0 0 10px; font-size:13px; }
+.patient-identity small { color:var(--sub); font-size:11px; }
+.patient-avatar { flex:0 0 108px; border-radius:60px 60px 28px 28px; background:linear-gradient(160deg,#d9eee7,#e7f0f4); }
+.patient-avatar svg { display:block; width:108px; height:auto; }
+@keyframes calm-appear { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.page.active { animation:calm-appear .48s var(--ease-calm) both; }
+.patient-identity:not(.hidden) { animation:calm-appear .55s var(--ease-calm) both; }
+.btn, .nav, .analyzer-examples button { transition:background .3s ease-in-out, border-color .3s ease-in-out, box-shadow .35s ease-in-out, transform .35s var(--ease-calm); }
+@media (hover:hover) { .btn:hover, .analyzer-examples button:hover { transform:translateY(-2px); } }
+.btn:active { transform:translateY(0) scale(.985); }
+.condition-wrapper { transition:height .5s var(--ease-calm); }
+.condition-icon { transition:transform .4s ease-in-out; }
+.condition-content { transition:opacity .3s ease-in-out, transform .4s var(--ease-calm); }
+@media (max-width:700px) {
+  .home-intro { flex-direction:column; align-items:flex-start; padding-top:20px; gap:18px; }
+  .patient-identity { gap:15px; }
+  .patient-avatar { flex-basis:80px; }
+  .patient-avatar svg { width:80px; }
+  .patient-identity h3 { font-size:20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+}
+.sources-stat, .sources-reveal, .source-item, .condition-card { transition-timing-function:var(--ease-calm); }
+/* An introductory sidebar that settles into a quiet icon rail. */
+@media (min-width:701px) {
+  /* All pages keep the same reading width in both sidebar states. Auto margins
+     ease the workspace into the released space without rewrapping its text. */
+  .main { width:calc(100% - 242px); flex:0 0 auto; }
+  .side { position:sticky; top:0; height:100vh; align-self:flex-start; width:242px; transition:width .5s var(--ease-calm), padding .5s var(--ease-calm); }
+  /* Keep the footer from rewrapping as the rail slides. Reveal after expansion. */
+  .side .sidenote { width:208px; flex-shrink:0; opacity:1; visibility:visible; transition:opacity .18s ease-in-out .5s, visibility 0s linear .5s; }
+  .side .logo { margin-bottom:14px; }
+  .brand-logo svg { flex-shrink:0; }
+  .brand-logo > span { display:block; max-width:165px; overflow:hidden; white-space:nowrap; transition:max-width .4s var(--ease-calm), opacity .3s ease-in-out; }
+  .nav { display:flex; align-items:center; gap:12px; white-space:nowrap; }
+  .nav-icon { flex:0 0 22px; text-align:center; font-size:20px; line-height:1; }
+  .nav-label { display:block; max-width:170px; overflow:hidden; opacity:1; transition:max-width .4s var(--ease-calm), opacity .3s ease-in-out; }
+  .side-toggle { display:flex; align-items:center; justify-content:center; gap:8px; min-height:32px; margin:0 0 24px; padding:5px 10px; color:#bedad9; background:transparent; border:1px solid #ffffff20; border-radius:9px; font-size:12px; }
+  .switch-track { display:block; flex:0 0 34px; height:20px; position:relative; border-radius:20px; background:#ffffff28; transition:background .3s ease-in-out; }
+  .switch-track::after { content:""; position:absolute; width:14px; height:14px; left:3px; top:3px; background:#dcebe9; border-radius:50%; transition:transform .3s var(--ease-calm), background .3s ease-in-out; }
+  .side-toggle[aria-checked="true"] .switch-track { background:#51bdb0; }
+  .side-toggle[aria-checked="true"] .switch-track::after { transform:translateX(14px); background:white; }
+  .side-toggle-label { max-width:120px; overflow:hidden; white-space:nowrap; transition:max-width .4s var(--ease-calm), opacity .3s ease-in-out; }
+  .side.collapsed { width:88px; padding-left:12px; padding-right:12px; }
+  .side.collapsed .logo { margin-left:9px; gap:0; }
+  .side.collapsed .brand-logo > span,
+  .side.collapsed .nav-label,
+  .side.collapsed .side-toggle-label { max-width:0; opacity:0; }
+  .side.collapsed .nav { justify-content:center; gap:0; padding-left:10px; padding-right:10px; }
+  .side.collapsed .side-toggle { gap:0; width:100%; }
+  .side.collapsed .sidenote { opacity:0; visibility:hidden; transition:none; }
+}
+@media (max-width:700px) {
+  .side-toggle { display:none; }
+  .nav-icon { margin-right:6px; }
+  .side nav { display:flex; flex-wrap:wrap; gap:4px; }
+  .side .nav { margin:0; font-size:12px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+}
+/* PseudoClinic: a focused question-and-answer surface. */
+.analyzer-page > .header { display:none; }
+.clinic-heading { text-align:center; margin:20px auto 30px; }
+.clinic-heading h2 { margin:12px 0; font-size:clamp(32px,4vw,46px); letter-spacing:-1.7px; }
+.clinic-heading p { margin:0; font-size:15px; }
+.clinic-workspace { max-width:780px; margin:0 auto; }
+#analyzerForm { padding:26px; }
+#analyzerForm .fieldlabel { margin:0 0 14px; font-size:16px; }
+#analyzerPrompt { min-height:140px; line-height:1.7; background:#f9fcfb; border-color:#d7e7e4; }
+.clinic-helper { font-size:12px; margin:10px 0; }
+.analyzer-examples { margin:16px 0 20px; }
+.clinic-toolbar { display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; border-top:1px solid var(--line); padding-top:18px; }
+.clinic-toolbar .analyzer-consent { margin:0; align-items:center; }
+.clinic-toolbar .analyzer-consent input { margin:0; accent-color:var(--teal); }
+.clinic-toolbar .actions { margin:0; }
+.clinic-sharing { font-size:11px; line-height:1.6; margin:12px 0 0; }
+#analyzerStatus { font-size:12px; margin:8px 0 0; }
+#analyzerStatus:empty { display:none; }
+.analyzer-result { margin-top:14px; padding:24px 26px; }
+.analyzer-result h3 { margin:0 0 14px; font-size:16px; }
+.clinic-answer-body > .topic { padding:0; background:transparent; border:0; margin:18px 0; }
+.analyzer-result .topic p { font-size:15px; line-height:1.8; }
+.analyzer-result .topic a { font-size:12px; }
+.clinic-references { border-top:1px solid var(--line); margin-top:20px; padding-top:16px; }
+.clinic-references summary { cursor:pointer; font-size:13px; font-weight:650; color:var(--teal); }
+.clinic-meta { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin:16px 4px 24px; color:var(--sub); font-size:11px; }
+.clinic-method { max-width:360px; text-align:right; }
+.clinic-method summary { cursor:pointer; color:var(--teal); }
+.clinic-method p { text-align:left; line-height:1.7; }
+.privacy-details { margin:28px auto 0; max-width:900px; background:transparent; border-color:#dce9e6; padding:12px 16px; font-size:12px; }
+.privacy-details summary { cursor:pointer; color:var(--sub); }
+.privacy-details p { line-height:1.8; }
+.analyzer-page > .privacy-details { max-width:780px; }
+@media (max-width:700px) { #analyzerForm { padding:20px; } .clinic-heading { margin:8px auto 24px; } .clinic-meta { flex-direction:column; gap:10px; } .clinic-method { text-align:left; } }
+.sample-label { color:var(--sub); align-self:center; font-size:11px; font-weight:600; padding-right:3px; }
+.clinic-answer-header { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.clinic-answer-header h3 { margin:0; }
+.summary-toggle {
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  min-height:44px; padding:10px 16px; border:1px solid #086c70; border-radius:10px;
+  background:#0b777b; color:#fff; font-size:13px; font-weight:650;
+  box-shadow:0 3px 8px rgba(11,119,123,.16);
+  transition:background .25s ease-in-out, box-shadow .25s ease-in-out, transform .25s var(--ease-calm);
+}
+.summary-toggle::before {
+  content:""; width:14px; height:12px; flex-shrink:0;
+  background:linear-gradient(currentColor,currentColor) left top / 14px 2px no-repeat,
+    linear-gradient(currentColor,currentColor) left center / 14px 2px no-repeat,
+    linear-gradient(currentColor,currentColor) left bottom / 9px 2px no-repeat;
+}
+.summary-toggle:hover { background:#086367; box-shadow:0 5px 12px rgba(11,119,123,.22); }
+.summary-toggle:active { transform:scale(.98); }
+.summary-toggle[aria-pressed="true"] { background:#dcefe9; color:#075e60; border-color:#78bcb5; }
+/* Pip is drawn locally: no image or tracking service. */
+.clinic-mascot { display:block; width:104px; height:104px; padding:0; margin:0 auto 2px; border:0; background:transparent; position:relative; border-radius:26px; }
+.mascot-drawing { display:block; position:relative; width:100%; height:100%; filter:drop-shadow(0 5px 5px #0b82851a); transform:translate(var(--lean-x,0px),var(--lean-y,0px)) rotate(var(--lean-angle,0deg)); transform-origin:50% 85%; transition:transform .45s cubic-bezier(.22,.61,.36,1); }
+.mascot-cross { position:absolute; inset:4px; background:linear-gradient(140deg,#75d9c3,#13908f); clip-path:polygon(32% 0,68% 0,68% 32%,100% 32%,100% 68%,68% 68%,68% 100%,32% 100%,32% 68%,0 68%,0 32%,32% 32%); border-radius:12px; }
+.mascot-eye { position:absolute; top:33px; width:26px; height:31px; border-radius:50%; background:#fff; box-shadow:0 1px 2px #124e4a1a; overflow:hidden; transition:transform .3s ease-in-out; }
+.eye-left { left:23px; } .eye-right { right:23px; }
+.mascot-eye > span { position:absolute; width:11px; height:15px; top:9px; left:8px; background:#173e49; border-radius:50%; transform:translate(var(--pupil-x,0px), var(--pupil-y,0px)); transition:transform .28s ease-out; }
+.mascot-eye > span::after { content:""; position:absolute; width:3px; height:3px; top:2px; left:2px; background:#fff; border-radius:50%; }
+.mascot-message { margin:0 0 20px; min-height:18px; color:var(--sub); font-size:11px; }
+.mascot-dots { display:none; position:absolute; right:-4px; top:6px; padding:0 7px 4px; color:#0b777b; background:#e5f5ef; border-radius:12px; font-size:24px; line-height:1; }
+.clinic-mascot[data-state="typing"] .mascot-eye > span { transform:translateY(5px); }
+.clinic-mascot[data-state="typing"] .mascot-drawing { transform:rotate(3deg); transition:transform .35s var(--ease-calm); }
+.clinic-mascot[data-state="thinking"] .mascot-drawing { animation:pip-think 1.6s ease-in-out infinite; }
+.clinic-mascot[data-state="thinking"] .mascot-eye > span { animation:pip-glance 2s ease-in-out infinite; }
+.clinic-mascot[data-state="thinking"] .mascot-dots { display:block; animation:pip-dots 1.1s ease-in-out infinite; }
+.clinic-mascot[data-state="greeting"] .mascot-drawing { animation:pip-hello .55s ease-in-out 3; }
+@keyframes pip-think { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-4px); } }
+@keyframes pip-glance { 0%,100% { transform:translateX(-2px); } 50% { transform:translateX(2px); } }
+@keyframes pip-dots { 0%,100% { opacity:.45; } 50% { opacity:1; } }
+@keyframes pip-hello { 0%,100% { transform:rotate(-5deg); } 50% { transform:rotate(5deg); } }
+.clinical-option { margin:12px 0; border:1px solid #d8e7e3; background:#f8fcfa; border-radius:12px; padding:14px 16px; font-size:14px; line-height:1.7; }
+.clinical-option summary { cursor:pointer; font-weight:650; color:#245a61; }
+.clinical-option p { margin:12px 0; }
+.clinical-option a { font-size:12px; }
+.clinic-answer-body > h3 { margin-top:24px; margin-bottom:8px; }
+.clinic-care-notice { border-left:3px solid #bd7047; background:#fff5ea; color:#72482f; border-radius:8px; padding:14px 16px; font-size:14px; line-height:1.7; }
+@media (prefers-reduced-motion:reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
+.answer-mascot { width:44px; height:44px; margin:0; flex:0 0 44px; }
+.mascot-scale { width:104px; height:104px; transform:scale(.42); transform-origin:top left; }
+.clinic-answer-header h3 { flex:1; }
 </style>
 </head>
 
@@ -1285,7 +1404,7 @@ a.brand-logo:focus-visible {
 <div class="app">
 
   <!-- Sidebar -->
-  <aside class="side" aria-label="Main navigation">
+  <aside class="side" id="sidebar" aria-label="Main navigation">
    
 <a class="logo brand-logo" href="/" aria-label="Return to MedInsight homepage">
   <svg
@@ -1331,17 +1450,30 @@ a.brand-logo:focus-visible {
 </a>
 
 
-    <button class="nav active" data-page="dashboard">
-      ⌂ &nbsp; CliniCare Bay
+    <button type="button" role="switch" class="side-toggle" id="sidebarToggle" aria-label="Keep sidebar expanded" aria-checked="true" aria-controls="sidebarNav" title="Keep sidebar expanded">
+      <span class="switch-track" aria-hidden="true"></span><span class="side-toggle-label">Keep expanded</span>
+    </button>
+    <nav id="sidebarNav" aria-label="Workspace">
+    <button class="nav active" data-page="dashboard" aria-current="page" aria-label="Home" title="Home">
+      <span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Home</span>
     </button>
 
-    <button class="nav" data-page="library">
-      ▤ &nbsp; Medical Library
+    <button class="nav" data-page="bay" aria-label="CliniCare Bay" title="CliniCare Bay">
+      <span class="nav-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3M9 21h6"/></svg></span><span class="nav-label">CliniCare Bay</span>
     </button>
 
+    <button class="nav" data-page="analyzer" aria-label="PseudoClinic" title="PseudoClinic">
+      <span class="nav-icon" aria-hidden="true">✧</span><span class="nav-label">PseudoClinic</span>
+    </button>
+
+    <button class="nav" data-page="library" aria-label="Medical Library" title="Medical Library">
+      <span class="nav-icon" aria-hidden="true">▤</span><span class="nav-label">Medical Library</span>
+    </button>
+
+    </nav>
     <div class="sidenote">
-      v0.7 · Student-built prototype<br>
-      Local development · Synthetic records only
+      v0.8 · Student-built prototype<br>
+      Educational research · Fictional cases only
     </div>
   </aside>
 
@@ -1350,14 +1482,13 @@ a.brand-logo:focus-visible {
 
 <header class="header">
   <div>
-    <h1>Welcome to the CliniCare Bay</h1>
-    <p class="muted">
-      Explore possible conditions through AI-assisted
-      symptom analysis.
+    <h1 id="pageTitle">Welcome to MedInsight</h1>
+    <p class="muted" id="pageSubtitle">
+      A little curiosity. A clearer understanding.
     </p>
   </div>
 
-  <span class="pill">Educational prototype</span>
+  <span class="pill" aria-label="Version 0.8">v0.8</span>
 </header>
 
 
@@ -1368,23 +1499,22 @@ a.brand-logo:focus-visible {
 
         <section class="hero panel">
           <div>
-            <span class="eyebrow">Thoughtful health research</span>
+            <span class="eyebrow">Question everything</span>
 
             <h2>A clearer picture starts here.</h2>
 
             <p class="muted">
-              Explore fictional patient histories, organize
-              case information, and discover credible medical
-              resources—all in one simple workspace.
+              Explore patient records in CliniCare Bay,
+              or ask a question in PseudoClinic. Let curiosity lead.
             </p>
 
             <div class="actions">
               <button class="btn primary" id="startAnalysis">
-                Start analysis now ↗
+                Enter research bay ↗
               </button>
 
-              <button class="btn secondary" id="openLibrary">
-                Explore medical library
+              <button class="btn secondary" id="openAnalyzer">
+                Try PseudoClinic
               </button>
             </div>
           </div>
@@ -1456,37 +1586,21 @@ a.brand-logo:focus-visible {
 
 
 
-        <div class="panel">
-          <h3 class="minititle">
-  Open-source medical research prototype
-</h3>
-
-          <p class="muted">
-            No login, account system, or patient database storage
-            is implemented in this prototype. It is not suitable
-            for real patient information, diagnosis, or medical advice.
-          </p>
-
-          
-<a
-  href="https://github.com/jaivenk/medinsight-ai"
-  class="btn secondary"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <svg width="19" height="19" viewBox="0 0 24 24"
-       fill="currentColor" aria-hidden="true">
-    <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.69-3.88-1.36-3.88-1.36-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18A10.94 10.94 0 0 1 12 6.61c.97 0 1.94.13 2.85.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.73.81 1.18 1.84 1.18 3.1 0 4.42-2.68 5.39-5.24 5.68.41.35.77 1.04.77 2.1v3.1c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
-  </svg>
-  View on GitHub ↗
-</a>
-
+        <div class="home-intro">
+          <div><span class="eyebrow">Meet PseudoClinic</span>
+            <h3>A question is a good place to start.</h3>
+            <p class="muted">Clear explanations. Visible sources. Room to explore.</p>
+          </div>
+          <button class="btn secondary" id="discoverAnalyzer">Explore the AI Analyzer ↗</button>
         </div>
-
+        <p class="home-footnote">Student-built. Fictional patients. Thoughtful research.
+          <a href="https://github.com/jaivenk/medinsight-ai" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></p>
       </div>
+    </section>
 
+    <section id="bay" class="page" aria-labelledby="bayHeading">
       <!-- Analysis workspace: hidden initially -->
-      <div id="analysisView" class="analysis-view">
+      <div id="analysisView" class="analysis-view active">
 
         <div class="actions" style="margin:0 0 18px">
           <button class="btn secondary" id="backHome">
@@ -1494,48 +1608,18 @@ a.brand-logo:focus-visible {
           </button>
         </div>
 
-        <h2 class="sectionhead">Fictional Case Analysis</h2>
+        <h2 class="sectionhead" id="bayHeading">CliniCare Bay</h2>
         <p class="sectionintro">
-          Enter a sample case or load a synthetic record to
-          create an educational research report.
+          Load a patient. Add symptoms. Follow the research.
         </p>
-
-<div class="panel case-mode-panel">
-  <h3 class="minititle">Choose your starting point</h3>
-  <p class="muted">
-    Build your own fictional scenario or start with
-    a Synthea-generated patient record.
-  </p>
-
-  <div class="case-mode-grid">
-    <button type="button"
-            class="case-mode-option selected"
-            id="customMode"
-            aria-pressed="true">
-      <span class="case-mode-icon">✎</span>
-      <strong>Create a scenario</strong>
-      <small>Start with an empty patient intake form.</small>
-    </button>
-
-    <button type="button"
-            class="case-mode-option"
-            id="syntheaMode"
-            aria-pressed="false">
-      <span class="case-mode-icon">✚</span>
-      <strong>Load a synthetic patient</strong>
-      <small>Use Synthea records as your starting point.</small>
-    </button>
-  </div>
-</div>
 
         <div class="layout">
           <div class="stack">
 
-            <div class="panel hidden" id="syntheaPanel">
+            <div class="panel" id="syntheaPanel">
               <h3 class="minititle">Load a synthetic patient</h3>
               <p class="muted">
-                Optional: populate fields using
-                Synthea-generated records.
+                Choose a preloaded record to begin.
               </p>
 
               <label class="fieldlabel" for="patientSelect">
@@ -1555,32 +1639,43 @@ a.brand-logo:focus-visible {
                  aria-live="polite"></p>
             </div>
 
+            <div class="patient-identity panel hidden" id="patientIdentity" aria-live="polite">
+              <div id="patientAvatar" class="patient-avatar"></div>
+              <div><span class="eyebrow">Research subject</span>
+                <h3 id="patientDisplayName"></h3>
+                <p class="muted" id="patientDisplayMeta"></p>
+                <small>Illustrative avatar · not a patient likeness</small>
+              </div>
+            </div>
+
             <div class="panel">
-              <h3 class="minititle">Patient Intake</h3>
+              <h3 class="minititle">Research notes</h3>
+              <p class="muted" id="researchHint">Load a patient above to open your research notes.</p>
 
               <form id="patientForm">
+                <fieldset id="patientFields" disabled>
+                <legend class="sr-only">Loaded patient and editable research notes</legend>
 
                 <div class="twocol">
                   <div>
                     <label class="fieldlabel" for="name">
                       Patient name
                     </label>
-                    <input id="name" required maxlength="100"
-                           placeholder="Fictional name">
+                    <input id="name" readonly required maxlength="100" placeholder="Load a patient first">
                   </div>
 
                   <div>
                     <label class="fieldlabel" for="age">Age</label>
                     <input id="age" type="number"
-                           min="0" max="120" required>
+                           min="0" max="120" readonly required>
                   </div>
                 </div>
 
                 <label class="fieldlabel" for="symptoms">
-                  Reported symptoms
+                  Symptoms to research
                 </label>
                 <textarea id="symptoms" required maxlength="2000"
-                  placeholder="Describe a fictional case…"></textarea>
+                  placeholder="Add fictional symptoms for this patient…"></textarea>
 
                 <label class="fieldlabel" for="duration">
                   Duration
@@ -1612,10 +1707,11 @@ a.brand-logo:focus-visible {
   id="runDifferential"
   type="button"
   style="margin-top:12px; width:100%;">
-  ✚ Explore pseudo-diagnosis
+  Compare research topics
 </button>
 
 
+                </fieldset>
               </form>
             </div>
           </div>
@@ -1623,16 +1719,15 @@ a.brand-logo:focus-visible {
           <div class="stack">
 
             <div class="panel">
-              <h3 class="minititle">Educational Pseudo-Diagnosis</h3>
+              <h3 class="minititle">Patient research notebook</h3>
 
               <p class="muted">
-                Shows reported details and example condition-topic
-                matches—not a diagnosis.
+                Your observations and references, together.
               </p>
 
               <div id="results" class="result blank"
                    aria-live="polite">
-                Your report will appear here.
+                Load a patient and add symptoms to start researching.
               </div>
 
 <div id="differentialPanel"
@@ -1641,7 +1736,7 @@ a.brand-logo:focus-visible {
   <div class="differential-heading">
     <div>
       <span class="eyebrow">Educational case exploration</span>
-      <h3>Pseudo-Diagnosis Explorer</h3>
+      <h3>Research Topic Explorer</h3>
     </div>
     <span class="differential-label">
       Research simulation
@@ -1693,8 +1788,7 @@ a.brand-logo:focus-visible {
       <h2 class="sectionhead">Medical Library</h2>
 
       <p class="sectionintro">
-        Browse evidence-based health information, right here
-        or at the original source.
+        Find a topic. Read the source.
       </p>
 
       <div class="library-grid">
@@ -1702,10 +1796,7 @@ a.brand-logo:focus-visible {
         <div class="panel">
           <h3 class="minititle">Search MedlinePlus</h3>
 
-          <p class="muted">
-            Explore NIH health topics and read short
-            descriptions without leaving MedInsight.
-          </p>
+
 
           <label class="fieldlabel" for="medicalSearch">
             Medical topic
@@ -1725,10 +1816,7 @@ a.brand-logo:focus-visible {
         <div class="panel">
           <h3 class="minititle">Official medical resources</h3>
 
-          <p class="muted">
-            Follow the original sources for fuller reading
-            and research.
-          </p>
+
 
           <div class="linklist">
             <a href="https://medlineplus.gov/"
@@ -1752,34 +1840,76 @@ a.brand-logo:focus-visible {
             </a>
           </div>
 
-          <div class="divider"></div>
 
-          <h3 class="minititle">Using these references</h3>
-
-          <p class="muted">
-            Health-topic results are educational resources,
-            not diagnoses. The system does not confirm whether
-            a fictional case has a particular condition.
-          </p>
         </div>
 
       </div>
     </section>
 
-    <!-- Privacy -->
-    <div class="notice">
-      <strong>Privacy and safety:</strong>
-      This local prototype has no account storage or automatic
-      patient-record backup implemented. Submitted form data
-      is processed by your local FastAPI server; searches send
-      search terms to MedlinePlus. Browser, OS, developer tools,
-      or server logs may still retain information. Do not enter
-      real patient details or rely on results for medical decisions.
-    </div>
+    <section id="analyzer" class="page" aria-labelledby="analyzerHeading">
+      <div class="clinic-heading">
+        <button type="button" id="clinicMascot" class="clinic-mascot" data-state="idle" aria-label="Say hello to Pip, your research companion">
+          <span class="mascot-drawing" aria-hidden="true">
+            <span class="mascot-cross"></span>
+            <span class="mascot-eye eye-left"><span></span></span>
+            <span class="mascot-eye eye-right"><span></span></span>
+            <span class="mascot-dots">···</span>
+          </span>
+        </button>
+        <p class="mascot-message" id="mascotMessage" role="status" aria-live="polite">Hi, I'm Pip. What's on your mind?</p>
+        <span class="eyebrow">AI · backed by sources</span>
+        <h2 id="analyzerHeading">PseudoClinic</h2>
+        <p class="muted">A clearer understanding, one question at a time.</p>
+      </div>
+      <div class="clinic-workspace">
+        <form id="analyzerForm" class="panel">
+          <label class="fieldlabel" for="analyzerPrompt">What would you like to understand?</label>
+          <textarea id="analyzerPrompt" rows="4" minlength="5" maxlength="2000" required
+            placeholder="Describe symptoms or ask a medical question…"
+            aria-describedby="analyzerHelp"></textarea>
+          <p class="muted clinic-helper" id="analyzerHelp">Describe the symptoms, when they started, and what makes them better or worse.</p>
+          <div class="analyzer-examples" aria-label="Sample prompts">
+            <span class="sample-label">Sample prompts</span>
+            <button type="button" data-prompt="Explain how eczema and contact dermatitis can overlap with itchy dry skin.">Skin symptoms</button>
+            <button type="button" data-prompt="Explain migraine and light sensitivity using medical references.">Migraine</button>
+            <button type="button" data-prompt="What is asthma and how does it relate to cough?">Asthma</button>
+          </div>
+          <div class="clinic-toolbar">
+            <label class="analyzer-consent">
+              <input type="checkbox" id="analyzerUseAI" aria-describedby="aiSharingNote">
+              <span>AI symptom reasoning</span>
+            </label>
+            <div class="actions">
+              <button class="btn secondary" id="analyzerClear" type="button">Clear</button>
+              <button class="btn primary" id="analyzerSubmit" type="submit">Explore references ↗</button>
+            </div>
+          </div>
+          <p class="clinic-sharing muted" id="aiSharingNote">AI mode sends your full description and source excerpts to OpenAI. Reference-only mode sends your question to MedlinePlus.</p>
+          <p class="muted" id="analyzerStatus" role="status" aria-live="polite"></p>
+        </form>
+        <div id="analyzerResults" class="panel analyzer-result" aria-label="Analyzer results" aria-busy="false"></div>
+        <div class="clinic-meta">
+          <span>Possible explanations · not a diagnosis or prescription</span>
+          <details class="clinic-method">
+            <summary>How it works</summary>
+            <p>AI reads your full description, plans medical reference searches, then compares possible explanations using MedlinePlus excerpts. Medication names and evidence quotes are checked against their cited excerpts. Check original sources; AI can make mistakes.</p>
+            <p>There is no physical exam, validated triage, or complete medication-interaction check. Treatment needs clinician or pharmacist review.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Details stay available without dominating every workspace. -->
+    <details class="notice privacy-details">
+      <summary>Privacy &amp; limitations</summary>
+      <p>AI reasoning sends your full description and retrieved excerpts to OpenAI when enabled. AI-generated medical topic searches go to NLM services; without AI, your question is sent directly to MedlinePlus. Avoid identifying information.</p>
+      <p>Prompts are not intentionally saved by this app. Service and browser logs may retain data.
+        Sources and generated text are for education, not diagnosis or medical decisions.</p>
+    </details>
 
     <p class="privacy">
       © MedInsight · Student research demo ·
-      <strong>Fictional cases only</strong>
+      <strong>Educational use only</strong>
     </p>
 
   </main>
@@ -1788,88 +1918,142 @@ a.brand-logo:focus-visible {
 <script>
 const $ = id => document.getElementById(id);
 
+// Show the labels briefly on every page load before applying saved preferences.
+const sidebar = $("sidebar");
+const sidebarToggle = $("sidebarToggle");
+const desktopSidebar = window.matchMedia("(min-width: 701px)");
+let sidebarTimer;
+let sidebarPreference = null;
+let sidebarIntroFinished = false;
+try { sidebarPreference = sessionStorage.getItem("medinsight-sidebar-preference"); } catch {}
+function setSidebarCollapsed(collapsed) {
+  sidebar.classList.toggle("collapsed", collapsed);
+  sidebarToggle.setAttribute("aria-checked", String(!collapsed));
+}
+function startSidebarIntro() {
+  clearTimeout(sidebarTimer);
+  if (!desktopSidebar.matches) { setSidebarCollapsed(false); return; }
+  if (sidebarIntroFinished) { setSidebarCollapsed(sidebarPreference !== "expanded"); return; }
+  setSidebarCollapsed(false);
+  sidebarTimer = setTimeout(() => {
+    sidebarIntroFinished = true;
+    setSidebarCollapsed(sidebarPreference !== "expanded");
+  }, 5000);
+}
+sidebarToggle.addEventListener("click", () => {
+  clearTimeout(sidebarTimer);
+  sidebarIntroFinished = true;
+  const collapsed = !sidebar.classList.contains("collapsed");
+  setSidebarCollapsed(collapsed);
+  sidebarPreference = collapsed ? "collapsed" : "expanded";
+  try { sessionStorage.setItem("medinsight-sidebar-preference", sidebarPreference); } catch {}
+});
+desktopSidebar.addEventListener("change", startSidebarIntro);
+startSidebarIntro();
+
 // Navigation
 function page(name) {
+  const titles = {
+    dashboard: ["Welcome to MedInsight", "A little curiosity. A clearer understanding."],
+    bay: ["A space for discovery", "Preloaded patients. Your questions. Research worth exploring."],
+    analyzer: ["Welcome to PseudoClinic", "Your AI Analyzer for educational symptom exploration."],
+    library: ["Your medical reference desk", "Explore trusted health information and original references."]
+  };
+  document.querySelector(".main").classList.toggle("analyzer-page", name === "analyzer");
+  $("pageTitle").textContent = titles[name][0];
+  $("pageSubtitle").textContent = titles[name][1];
+  document.title = `MedInsight | ${{dashboard: "Home", bay: "CliniCare Bay", analyzer: "PseudoClinic" , library: "Medical Library"}[name]}`;
   document.querySelectorAll(".page").forEach(element => {
     element.classList.toggle("active", element.id === name);
   });
 
   document.querySelectorAll(".nav").forEach(element => {
-    element.classList.toggle(
-      "active",
-      element.dataset.page === name
-    );
+    element.classList.toggle("active", element.dataset.page === name);
+    if (element.dataset.page === name) element.setAttribute("aria-current", "page");
+    else element.removeAttribute("aria-current");
   });
 
   window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function analysis() {
-  page("dashboard");
-  $("welcomeView").classList.add("hidden");
-  $("analysisView").classList.add("active");
-}
-
-function home() {
-  page("dashboard");
-  $("welcomeView").classList.remove("hidden");
-  $("analysisView").classList.remove("active");
-}
-
+function analysis() { page("bay"); }
+function home() { page("dashboard"); }
 document.querySelectorAll(".nav").forEach(button => {
-  button.addEventListener("click", () => {
-    if (button.dataset.page === "dashboard") {
-      home();
-    } else {
-      page(button.dataset.page);
-    }
-  });
+  button.addEventListener("click", () => page(button.dataset.page));
 });
-
 $("startAnalysis").addEventListener("click", analysis);
 $("backHome").addEventListener("click", home);
+$("openAnalyzer").addEventListener("click", () => page("analyzer"));
+$("discoverAnalyzer").addEventListener("click", () => page("analyzer"));
 
-$("openLibrary").addEventListener("click", () => {
-  page("library");
-});
-
-// Select how to create a fictional case
-const customModeButton = $("customMode");
-const syntheaModeButton = $("syntheaMode");
-
-function setCaseMode(mode) {
-  const isCustom = mode === "custom";
-
-  customModeButton.classList.toggle("selected", isCustom);
-  syntheaModeButton.classList.toggle("selected", !isCustom);
-
-  customModeButton.setAttribute("aria-pressed", String(isCustom));
-  syntheaModeButton.setAttribute("aria-pressed", String(!isCustom));
-
-  $("syntheaPanel").classList.toggle("hidden", isCustom);
-
-  if (isCustom) {
-    $("patientForm").reset();
-    $("patientSelect").value = "";
-    $("patientStatus").textContent = "";
-
-    const results = $("results");
-    results.replaceChildren();
-    results.textContent = "Your report will appear here.";
-    results.classList.add("blank");
-
-    if ($("quickSearch")) $("quickSearch").value = "";
-    if ($("quickResults")) $("quickResults").replaceChildren();
-  }
+// A loaded identity is required; notes belong to that record only.
+let loadedPatientId = null;
+let patientVersion = 0;
+function resetPatientWorkspace() {
+  patientVersion++;
+  loadedPatientId = null;
+  $("patientFields").disabled = true;
+  $("patientForm").reset();
+  $("patientIdentity").classList.add("hidden");
+  $("patientAvatar").replaceChildren();
+  $("patientStatus").textContent = "";
+  $("researchHint").textContent = "Load a patient above to open your research notes.";
+  $("results").textContent = "Load a patient and add symptoms to start researching.";
+  $("results").classList.add("blank");
+  $("differentialPanel").classList.add("hidden");
+  $("differentialResults").replaceChildren();
+  $("differentialStatus").textContent = "";
+  $("quickResults").replaceChildren();
+  $("quickSearch").value = "";
+  $("submitButton").disabled = false;
+  $("runDifferential").disabled = false;
 }
+$("patientSelect").addEventListener("change", resetPatientWorkspace);
 
-customModeButton.addEventListener("click", () => {
-  setCaseMode("custom");
-});
-
-syntheaModeButton.addEventListener("click", () => {
-  setCaseMode("synthetic");
-});
+// Consistent, decorative portraits are generated locally from the record ID.
+function renderPatientAvatar(id) {
+  const seed = Array.from(id).reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 0);
+  const outfits = [
+    {shirt: "#548f92", accent: "#d8efea", style: "collar"},
+    {shirt: "#7b89a6", accent: "#dee5f2", style: "hoodie"},
+    {shirt: "#bc9272", accent: "#f8e6d5", style: "stripe"},
+    {shirt: "#869677", accent: "#e9efdc", style: "cardigan"}
+  ];
+  const outfit = outfits[seed % outfits.length];
+  const skin = ["#e8bfa2", "#b98668", "#d6a17e", "#9c6c53"][(seed >>> 3) % 4];
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 140 170");
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", `Minimal fictional person wearing a ${outfit.style}`);
+  const shape = (tag, attrs) => {
+    const element = document.createElementNS(svg.namespaceURI, tag);
+    for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
+    svg.appendChild(element);
+    return element;
+  };
+  shape("ellipse", {cx:70, cy:158, rx:40, ry:5, fill:"#c4dcd7", opacity:".5"});
+  shape("path", {d:"M48 125h20v29H49zM73 125h20l-2 29H73z", fill:"#354e5b"});
+  shape("path", {d:"M47 151h22v8H43q-2-5 4-8M73 151h19l6 8H73z", fill:"#f6f8f5"});
+  shape("path", {d:"M46 79Q70 68 94 79L109 119 96 125 91 104v31H49v-31l-5 21-13-6z", fill:outfit.shirt});
+  shape("path", {d:"m31 119 13 6-3 9q-10 2-10-15m65 6 13-6q0 17-10 15z", fill:skin});
+  shape("rect", {x:61, y:60, width:18, height:20, rx:7, fill:skin});
+  shape("ellipse", {cx:70, cy:46, rx:24, ry:28, fill:skin});
+  shape("path", {d:"M46 43Q38 10 69 13q31-3 26 33l-9-12q-13 7-31-1z", fill:"#35444b"});
+  shape("circle", {cx:62, cy:48, r:1.5, fill:"#35444b"});
+  shape("circle", {cx:79, cy:48, r:1.5, fill:"#35444b"});
+  shape("path", {d:"M65 60q5 4 11 0", fill:"none", stroke:"#815f50", "stroke-width":1.5, "stroke-linecap":"round"});
+  if (outfit.style === "collar") {
+    shape("path", {d:"m58 76 12 9-8 10-9-15m29-4-12 9 8 10 9-15", fill:outfit.accent});
+  } else if (outfit.style === "hoodie") {
+    shape("path", {d:"M53 80q17 20 34 0M65 91v16m10-16v16M58 116h25", fill:"none", stroke:outfit.accent, "stroke-width":3, "stroke-linecap":"round"});
+  } else if (outfit.style === "stripe") {
+    shape("path", {d:"M49 100h42v7H49zM49 116h42v7H49z", fill:outfit.accent});
+  } else {
+    shape("path", {d:"m59 76 11 20 12-20M70 96v39", fill:"none", stroke:outfit.accent, "stroke-width":4});
+    for (const cy of [104,115,126]) shape("circle", {cx:75,cy,r:1.5,fill:outfit.accent});
+  }
+  $("patientAvatar").replaceChildren(svg);
+}
 
 // Synthetic patient loading
 function descriptions(rows) {
@@ -1911,7 +2095,10 @@ $("loadPatient").addEventListener("click", async () => {
     return;
   }
 
-  $("patientStatus").textContent = "Loading…";
+  resetPatientWorkspace();
+  const version = patientVersion;
+  $("patientStatus").textContent = "Loading patient record…";
+  $("loadPatient").disabled = true;
 
   try {
     const response = await fetch(
@@ -1923,8 +2110,10 @@ $("loadPatient").addEventListener("click", async () => {
     }
 
     const data = await response.json();
+    if (version !== patientVersion) return;
 
     $("name").value = data.patient.name;
+    $("age").value = "";
 
     if (data.patient.birthdate) {
       const [year, month, day] =
@@ -1943,7 +2132,7 @@ $("loadPatient").addEventListener("click", async () => {
         age--;
       }
 
-      $("age").value = Math.max(0, age);
+      $("age").value = Math.max(0, Math.min(120, age));
     }
 
     $("history").value = descriptions(data.conditions);
@@ -1953,17 +2142,30 @@ $("loadPatient").addEventListener("click", async () => {
     $("symptoms").value = "";
     $("duration").value = "";
 
-    $("patientStatus").textContent =
-      "Fictional patient loaded.";
+    loadedPatientId = id;
+    $("patientFields").disabled = false;
+    renderPatientAvatar(id);
+    $("patientDisplayName").textContent = data.patient.name;
+    $("patientDisplayMeta").textContent = `${$("age").value || "Age unavailable"}${$("age").value ? " years" : ""} · Synthetic research record`;
+    $("patientIdentity").classList.remove("hidden");
+    $("researchHint").textContent = "Edit symptoms and notes below. Changes stay in this session.";
+    $("patientStatus").textContent = "Patient ready. Add symptoms to begin your research.";
 
   } catch (error) {
-    $("patientStatus").textContent = error.message;
+    if (version === patientVersion) $("patientStatus").textContent = error.message;
+  } finally {
+    $("loadPatient").disabled = false;
   }
 });
 
 // Submit case analysis
 $("patientForm").addEventListener("submit", async event => {
   event.preventDefault();
+  if (!loadedPatientId) {
+    $("patientStatus").textContent = "Load a preloaded patient first.";
+    return;
+  }
+  const version = patientVersion;
 
   const data = {
     name: $("name").value,
@@ -1995,6 +2197,7 @@ $("patientForm").addEventListener("submit", async event => {
     }
 
     const result = await response.json();
+    if (version !== patientVersion) return;
 
     
 const report = $("results");
@@ -2059,7 +2262,7 @@ const evidenceSection = document.createElement("section");
 evidenceSection.className = "topic";
 
 const evidenceTitle = document.createElement("h3");
-evidenceTitle.textContent = "Pseudo-Diagnosis Research Explorer";
+evidenceTitle.textContent = "Medical Reference Explorer";
 
 const evidenceStatus = document.createElement("p");
 evidenceStatus.textContent =
@@ -2080,6 +2283,7 @@ try {
   }
 
   const research = await researchResponse.json();
+  if (version !== patientVersion) return;
   evidenceStatus.remove();
 
   if (!research.matches.length) {
@@ -2233,7 +2437,7 @@ filterInput.type = "search";
 filterInput.placeholder = "Search condition, symptom, or source...";
 filterInput.setAttribute(
   "aria-label",
-  "Filter pseudo-diagnosis research results"
+  "Filter retrieved research results"
 );
 
 const matchCount = document.createElement("p");
@@ -2339,11 +2543,12 @@ filterInput.addEventListener("input", () => {
 }
 
 } catch (error) {
+  if (version !== patientVersion) return;
   $("results").textContent =
     "Could not generate report: " + error.message;
 
 } finally {
-  $("submitButton").disabled = false;
+  if (version === patientVersion) $("submitButton").disabled = false;
 }
 
 });
@@ -2481,13 +2686,18 @@ function makeDifferentialCard(condition, index) {
 }
 
 async function runDifferentialAnalysis() {
+  if (!loadedPatientId) {
+    $("patientStatus").textContent = "Load a preloaded patient first.";
+    return;
+  }
+  const version = patientVersion;
   const symptoms = $("symptoms").value.trim();
   const age = Number($("age").value);
 
   if (!$("age").value || !symptoms) {
     $("differentialPanel").classList.remove("hidden");
     $("differentialStatus").textContent =
-      "Enter a fictional age and symptoms first.";
+      "Add symptoms for the loaded patient first.";
     return;
   }
 
@@ -2522,6 +2732,7 @@ async function runDifferentialAnalysis() {
     }
 
     const data = await response.json();
+    if (version !== patientVersion) return;
 
     status.textContent = "";
 
@@ -2556,10 +2767,11 @@ async function runDifferentialAnalysis() {
     container.appendChild(disclaimer);
 
   } catch (error) {
+    if (version !== patientVersion) return;
     status.textContent =
-      `Pseudo-diagnosis explorer unavailable: ${error.message}`;
+      `Research topic explorer unavailable: ${error.message}`;
   } finally {
-    differentialButton.disabled = false;
+    if (version === patientVersion) differentialButton.disabled = false;
   }
 }
 
@@ -2568,6 +2780,283 @@ differentialButton.addEventListener(
   runDifferentialAnalysis
 );
 
+// AI Analyzer: text-only rendering keeps prompts and provider output inert.
+let analyzerController;
+let mascotTimer;
+function setMascotState(state, message) {
+  clearTimeout(mascotTimer);
+  document.querySelectorAll(".clinic-mascot").forEach(mascot => { mascot.dataset.state = state; });
+  if (message) $("mascotMessage").textContent = message;
+}
+function finishMascot() {
+  setMascotState("speaking", "Here's what the sources suggest.");
+  mascotTimer = setTimeout(() => setMascotState("idle", "We can explore another question, too."), 2600);
+}
+$("analyzerPrompt").addEventListener("focus", () => {
+  if (!$("analyzerSubmit").disabled) setMascotState("typing", "I'm listening.");
+});
+$("analyzerPrompt").addEventListener("input", () => {
+  if (!$("analyzerSubmit").disabled) setMascotState("typing", "I'm listening.");
+});
+$("analyzerPrompt").addEventListener("blur", () => {
+  if ($("clinicMascot").dataset.state === "typing") setMascotState("idle", "Ready when you are.");
+});
+// Cursor tracking is decorative and pauses during typing/thinking and reduced motion.
+let mascotPointerFrame = null;
+let mascotPointer = {x: 0, y: 0};
+const mascotFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+const mascotReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+document.addEventListener("pointermove", event => {
+  if (!mascotFinePointer.matches || mascotReducedMotion.matches || !$("analyzer").classList.contains("active")) return;
+  mascotPointer = {x: event.clientX, y: event.clientY};
+  if (mascotPointerFrame !== null) return;
+  mascotPointerFrame = requestAnimationFrame(() => {
+    mascotPointerFrame = null;
+    document.querySelectorAll(".clinic-mascot").forEach(mascot => {
+      if (!["idle", "greeting", "speaking"].includes(mascot.dataset.state)) return;
+      const bounds = mascot.getBoundingClientRect();
+      const dx = mascotPointer.x - bounds.left - bounds.width / 2;
+      const dy = mascotPointer.y - bounds.top - bounds.height / 2;
+      const x = Math.max(-2.5, Math.min(2.5, dx / 120));
+      const y = Math.max(-3, Math.min(3, dy / 120));
+      mascot.style.setProperty("--pupil-x", `${x}px`);
+      mascot.style.setProperty("--pupil-y", `${y}px`);
+      mascot.style.setProperty("--lean-x", `${Math.max(-2, Math.min(2, dx / 180))}px`);
+      mascot.style.setProperty("--lean-y", `${Math.max(-1.5, Math.min(1.5, dy / 220))}px`);
+      mascot.style.setProperty("--lean-angle", `${Math.max(-5, Math.min(5, dx / 100))}deg`);
+    });
+  });
+}, {passive: true});
+function settleMascotGaze() {
+  document.querySelectorAll(".clinic-mascot").forEach(mascot => {
+    for (const property of ["--pupil-x", "--pupil-y", "--lean-x", "--lean-y", "--lean-angle"]) mascot.style.removeProperty(property);
+  });
+}
+document.addEventListener("pointerout", event => { if (!event.relatedTarget) settleMascotGaze(); });
+window.addEventListener("blur", settleMascotGaze);
+mascotReducedMotion.addEventListener("change", settleMascotGaze);
+$("clinicMascot").addEventListener("click", () => {
+  if ($("analyzerSubmit").disabled) return;
+  setMascotState("greeting", "Hi! I'm Pip, your research companion.");
+  mascotTimer = setTimeout(() => setMascotState("idle", "What would you like to explore?"), 1800);
+});
+document.querySelectorAll("[data-prompt]").forEach(button => {
+  button.addEventListener("click", () => {
+    $("analyzerPrompt").value = button.dataset.prompt;
+    $("analyzerPrompt").focus();
+  });
+});
+$("analyzerUseAI").addEventListener("change", () => {
+  $("analyzerSubmit").textContent = $("analyzerUseAI").checked ? "Explain with AI ↗" : "Explore references ↗";
+});
+$("analyzerClear").addEventListener("click", () => {
+  analyzerController?.abort();
+  analyzerController = null;
+  $("analyzerSubmit").disabled = false;
+  $("analyzerResults").setAttribute("aria-busy", "false");
+  $("analyzerForm").reset();
+  setMascotState("idle", "A fresh question. Ready when you are.");
+  $("analyzerResults").replaceChildren();
+  $("analyzerStatus").textContent = "";
+  $("analyzerSubmit").textContent = "Explore references ↗";
+  $("analyzerPrompt").focus();
+});
+function analyzerText(tag, content, parent) {
+  const element = document.createElement(tag);
+  element.textContent = content;
+  parent.appendChild(element);
+  return element;
+}
+$("analyzerForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const output = $("analyzerResults");
+  const button = $("analyzerSubmit");
+  const controller = new AbortController();
+  analyzerController = controller;
+  const timeout = setTimeout(() => controller.abort(), 80000);
+  const thinkingStarted = performance.now();
+  setMascotState("thinking", "Thinking it through and checking sources…");
+  button.disabled = true;
+  output.replaceChildren();
+  output.setAttribute("aria-busy", "true");
+  analyzerText("p", "Following the sources…", output);
+  $("analyzerStatus").textContent = "Retrieving references and preparing your results…";
+  try {
+    const response = await fetch("/ai-analyzer", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({prompt: $("analyzerPrompt").value.trim(), use_ai: $("analyzerUseAI").checked}),
+      signal: controller.signal
+    });
+    if (!response.ok) throw new Error(response.status === 422 ? "Enter a question of 5–2,000 characters." : "Analyzer unavailable. Please try again.");
+    const data = await response.json();
+    // The request starts immediately; only an unusually fast result waits for Pip.
+    const buffer = data.mode === "safety_notice" ? 0 : Math.max(0, 1400 - (performance.now() - thinkingStarted));
+    if (buffer) await new Promise(resolve => setTimeout(resolve, buffer));
+    if (analyzerController !== controller) return;
+    if (data.mode === "safety_notice") setMascotState("idle", "Please read the care notice below.");
+    else finishMascot();
+    output.replaceChildren();
+    if (data.safety?.message) {
+      const safety = analyzerText("p", data.safety.message, output);
+      safety.className = "clinic-care-notice";
+      safety.setAttribute("role", "alert");
+    }
+    const resultHeader = document.createElement("div");
+    resultHeader.className = "clinic-answer-header";
+    if (data.mode === "ai_assisted") {
+      const replyMascot = document.createElement("div");
+      replyMascot.className = "clinic-mascot answer-mascot";
+      replyMascot.dataset.state = $("clinicMascot").dataset.state;
+      replyMascot.setAttribute("aria-hidden", "true");
+      const scale = document.createElement("div");
+      scale.className = "mascot-scale";
+      scale.appendChild($("clinicMascot").querySelector(".mascot-drawing").cloneNode(true));
+      replyMascot.appendChild(scale);
+      resultHeader.appendChild(replyMascot);
+    }
+    analyzerText("h3", data.mode === "ai_assisted" ? "AI-assisted explanation" : data.mode === "safety_notice" ? "Care notice" : "Reference excerpts", resultHeader);
+    output.appendChild(resultHeader);
+    const answerParagraphs = [];
+    const detailCards = [];
+    if (data.mode === "ai_assisted" && data.sections.length) {
+      const summaryButton = analyzerText("button", "Quick summary", resultHeader);
+      summaryButton.type = "button";
+      summaryButton.className = "summary-toggle";
+      summaryButton.setAttribute("aria-pressed", "false");
+      summaryButton.setAttribute("aria-controls", "clinicAnswerBody");
+      const summaryNote = analyzerText("p", "Key sentences from the full explanation.", output);
+      summaryNote.className = "clinic-sharing muted";
+      summaryNote.hidden = true;
+      summaryButton.addEventListener("click", () => {
+        const showSummary = summaryButton.getAttribute("aria-pressed") !== "true";
+        summaryButton.setAttribute("aria-pressed", String(showSummary));
+        summaryButton.textContent = showSummary ? "Full explanation" : "Quick summary";
+        summaryNote.hidden = !showSummary;
+        for (const {element, full, short} of answerParagraphs) element.textContent = showSummary ? short : full;
+        for (const card of detailCards) {
+          if (showSummary) { card.dataset.wasOpen = String(card.open); card.open = false; }
+          else card.open = card.dataset.wasOpen === "true";
+        }
+      });
+    }
+    const answerBody = document.createElement("div");
+    answerBody.id = "clinicAnswerBody";
+    answerBody.className = "clinic-answer-body";
+    output.appendChild(answerBody);
+
+    for (const warning of data.warnings) analyzerText("p", warning, output);
+    for (const section of data.sections) {
+      const card = document.createElement("article");
+      card.className = "topic";
+      const paragraph = analyzerText("p", section.explanation, card);
+      let firstSentence = section.explanation;
+      if (typeof Intl.Segmenter === "function") {
+        const sentences = new Intl.Segmenter("en", {granularity: "sentence"}).segment(section.explanation);
+        firstSentence = sentences[Symbol.iterator]().next().value?.segment.trim() || section.explanation;
+      } else {
+        firstSentence = section.explanation.match(/^.*?[.!?](?=\s|$)/s)?.[0] || section.explanation;
+      }
+      answerParagraphs.push({element: paragraph, full: section.explanation, short: firstSentence});
+      for (const id of section.source_ids) {
+        const source = data.sources.find(item => item.id === id);
+        if (!source) continue;
+        const link = analyzerText("a", `[${id}] ${source.title}`, card);
+        link.href = `#analyzer-source-${id}`;
+        link.addEventListener("click", () => { references.open = true; });
+      }
+      answerBody.appendChild(card);
+    }
+    function evidenceLinks(parent, ids) {
+      for (const id of ids) {
+        const source = data.sources.find(item => item.id === id);
+        if (!source) continue;
+        const link = analyzerText("a", `[${id}] ${source.title}`, parent);
+        link.href = `#analyzer-source-${id}`;
+        link.addEventListener("click", () => { references.open = true; });
+      }
+    }
+    if (data.possibilities?.length) {
+      analyzerText("h3", "Possible explanations", answerBody);
+      analyzerText("p", "Possibilities to investigate, not confirmed diagnoses or a complete list.", answerBody).className = "clinic-sharing muted";
+      for (const item of data.possibilities) {
+        const card = document.createElement("details");
+        card.className = "clinical-option";
+        analyzerText("summary", item.name, card);
+        analyzerText("p", item.why_it_might_fit, card);
+        analyzerText("strong", "What would help distinguish it", card);
+        analyzerText("p", item.what_else_to_check, card);
+        evidenceLinks(card, item.source_ids);
+        answerBody.appendChild(card);
+        detailCards.push(card);
+      }
+    }
+    if (data.mode === "ai_assisted") {
+      analyzerText("h3", "Medication information", answerBody);
+      analyzerText("p", "Options to discuss with a clinician or pharmacist. Suitability and interactions have not been established.", answerBody).className = "clinic-sharing muted";
+      if (!data.medication_options?.length) {
+        analyzerText("p", "The retrieved evidence does not support a specific medication option for this description.", answerBody).className = "clinic-sharing muted";
+      }
+      for (const item of data.medication_options || []) {
+        const card = document.createElement("details");
+        card.className = "clinical-option";
+        analyzerText("summary", item.name, card);
+        analyzerText("p", item.used_for, card);
+        analyzerText("strong", "Before considering it", card);
+        analyzerText("p", item.cautions, card);
+        evidenceLinks(card, item.source_ids);
+        answerBody.appendChild(card);
+        detailCards.push(card);
+      }
+    }
+    if (data.follow_up_questions?.length) {
+      const questions = document.createElement("details");
+      questions.className = "clinical-option";
+      analyzerText("summary", "Questions that would help", questions);
+      const list = document.createElement("ul");
+      data.follow_up_questions.forEach(question => analyzerText("li", question, list));
+      questions.appendChild(list);
+      answerBody.appendChild(questions);
+      detailCards.push(questions);
+    }
+    const references = document.createElement("details");
+    references.className = "clinic-references";
+    references.open = data.mode !== "ai_assisted";
+    if (data.sources.length) {
+      analyzerText("summary", `Sources · ${data.sources.length}`, references);
+      output.appendChild(references);
+    }
+    for (const source of data.sources) {
+      const card = document.createElement("article");
+      card.className = "topic";
+      card.id = `analyzer-source-${source.id}`;
+      analyzerText("h4", `[${source.id}] ${source.title}`, card);
+      analyzerText("blockquote", source.excerpt, card);
+      if (source.url.startsWith("https://medlineplus.gov/")) {
+        const link = analyzerText("a", "Read on MedlinePlus.gov ↗", card);
+        link.href = source.url; link.target = "_blank"; link.rel = "noopener noreferrer";
+      }
+      references.appendChild(card);
+    }
+    const metadata = analyzerText("p", `Search terms: ${data.searched_terms.join(", ") || "none"} · Retrieved ${new Date(data.retrieved_at).toLocaleString()}`, references);
+    metadata.className = "clinic-sharing muted";
+    output.scrollIntoView({block: "nearest", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+    $("analyzerStatus").textContent = data.mode === "safety_notice" ? "Please read the care notice." : data.sources.length ? "Ready. Explore the sources below." : "No supported references available. Try a more detailed question.";
+  } catch (error) {
+    if (analyzerController !== controller) return;
+    output.replaceChildren();
+    setMascotState("idle", "We hit a snag. You can try again.");
+    $("analyzerStatus").textContent = error.name === "AbortError" ? "Request timed out. Please try again." : "Unable to reach the Analyzer. Check that the server is running and try again.";
+  } finally {
+    clearTimeout(timeout);
+    if (analyzerController === controller) {
+      button.disabled = false;
+      output.setAttribute("aria-busy", "false");
+    }
+  }
+});
+fetch("/ai-analyzer/status").then(response => response.ok ? response.json() : null).then(data => {
+  if (data && !data.ai_available) $("analyzerStatus").textContent = "Reference mode is ready. AI explanations require server configuration.";
+}).catch(() => {});
 </script>
 
 </body>

@@ -3,6 +3,7 @@ import html
 import csv
 from research_engine import router as research_router
 from differential_engine import router as differential_router
+from analyzer_engine import router as analyzer_router
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import urlopen
@@ -12,9 +13,10 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
-app = FastAPI(title="MedInsight AI", version="0.3.0")
+app = FastAPI(title="MedInsight AI", version="0.8.0")
 app.include_router(research_router)
 app.include_router(differential_router)
+app.include_router(analyzer_router)
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"

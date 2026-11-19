@@ -1,280 +1,208 @@
 # MedInsight AI
 
-**An Educational Medical Research & Case Exploration Platform**
+**Question everything. Explore the sources.**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_MedInsight-0B8285?style=for-the-badge)](https://medinsight-ai-e7ps.onrender.com)
-[![Python](https://img.shields.io/badge/Python-Backend-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+MedInsight is a student-built medical research workspace with fictional patient records, a searchable reference library, and **PseudoClinic**, an optional AI Analyzer that turns a symptom description into source-linked educational explanations.
 
-[![Backend Tests](https://github.com/jaivenk/medinsight-ai/actions/workflows/python-tests.yml/badge.svg)](https://github.com/jaivenk/medinsight-ai/actions/workflows/python-tests.yml)
+[Live app](https://medinsight-ai-e7ps.onrender.com) · [GitHub](https://github.com/jaivenk/medinsight-ai) · [Report an issue](https://github.com/jaivenk/medinsight-ai/issues)
 
-**[Live Website](https://medinsight-ai-e7ps.onrender.com) · [Source Code](https://github.com/jaivenk/medinsight-ai)**
+[![Backend tests](https://github.com/jaivenk/medinsight-ai/actions/workflows/python-tests.yml/badge.svg)](https://github.com/jaivenk/medinsight-ai/actions/workflows/python-tests.yml)
 
----
+> **Educational use only.** This is not a clinically validated diagnostic or prescribing tool. Possible explanations are research suggestions, not confirmed diagnoses. Use fictional, non-identifying information; do not enter real patient data or rely on the app for care decisions.
 
-## Overview
+## A look inside · v0.8
 
-MedInsight AI is an independent student-developed web application exploring the intersection of medicine, biology, and software engineering.
+These screenshots show the current local application using a bundled synthetic patient and an educational sample question. AI responses vary. They do not establish what version is running on Render.
 
-The platform provides an interactive environment for exploring fictional patient cases, organizing symptom information, and retrieving educational medical references from established information sources.
+### Home
 
-Rather than attempting to diagnose patients, MedInsight AI focuses on making medical information easier to explore and understand through structured case reports, research-topic matching, and accessible presentation.
+A calm starting point, with direct paths into patient research and PseudoClinic.
 
-The application is built using **Python, FastAPI, HTML, CSS, and JavaScript**, and is deployed as a publicly accessible web service.
+![MedInsight Home with its research and PseudoClinic entry points](docs/images/dashboard.jpg)
 
-> **Important:** MedInsight AI is an educational research prototype, not a diagnostic tool or a clinically validated AI system. It does not provide diagnoses, disease probabilities, treatment recommendations, or medical advice. Do not enter real patient information.
+### PseudoClinic
 
+Ask a question in natural language, choose a sample, or explore references without AI. Pip responds to typing, cursor movement, and request progress.
 
-## Application Preview
+![PseudoClinic question composer with Pip and sample prompts](docs/images/pseudoclinic.jpg)
 
-### CliniCare Bay — Dashboard
+### Source-linked explanations
 
-A centralized workspace for exploring fictional cases, synthetic
-patient records, and trusted medical references.
+Answers appear below the question, with a Quick summary toggle, possible explanations, follow-up questions, and expandable sources. Medication information appears only when supported by retrieved evidence.
 
-![MedInsight AI Dashboard](docs/images/dashboard.png)
+![AI-assisted explanation with citations, possible explanations, and Quick summary](docs/images/ai-explanation.jpg)
 
-### Features in Action
+### CliniCare Bay
 
-<table>
-  <tr>
-    <td width="50%">
-      <strong>Fictional Patient Intake</strong>
-      <img src="docs/images/patient-intake.png"
-           alt="MedInsight fictional patient intake interface">
-    </td>
-    <td width="50%">
-      <strong>Medical Research Results</strong>
-      <img src="docs/images/results.png"
-           alt="MedInsight synthetic patient research results">
-    </td>
-  </tr>
-</table>
+Load a prebuilt fictional patient, then edit symptoms and research notes. Identity stays tied to the selected record; the original CSV data is unchanged.
+
+![CliniCare Bay with a loaded synthetic patient and research notebook](docs/images/patient-research.jpg)
 
 ### Medical Library
 
-Explore health information and access established medical
-reference sources.
+Search MedlinePlus and read original references, with links to PubMed, ClinicalTrials.gov, and Synthea.
 
-![MedInsight Medical Library](docs/images/medical-library.png)
+![Medical Library search and official resource links](docs/images/medical-library.jpg)
 
+## What you can do
 
-## Features
+| Workspace | Purpose |
+|---|---|
+| **Home** | Explore the app and its connected data sources. |
+| **CliniCare Bay** | Load one of 100 bundled synthetic patients, add research symptoms, generate a report, and compare educational topic matches. |
+| **PseudoClinic · AI Analyzer** | Interpret a full symptom description, retrieve medical references, and explore cited explanations with optional AI. |
+| **Medical Library** | Search health topics and open original medical references. |
 
-### Fictional Patient Case Analysis
+The interface includes patient illustrations, an animated cross mascot with cursor-following eyes, reduced-motion support, and an accessible sidebar switch. On desktop, the sidebar starts expanded for five seconds, then applies the session preference. Text layout stays stable as it collapses.
 
-- Structured intake for fictional patient names, ages, symptoms, symptom duration, medical history, medications, and allergies.
-- Educational keyword-based condition matching.
-- Generated reports summarizing fictional case information.
-- Research-topic suggestions based on provided descriptions.
+## How PseudoClinic works
 
-### Multi-Source Medical Research
+1. **Choose a mode.** Reference-only mode needs no API key. AI reasoning is an explicit per-question opt-in and requires server configuration.
+2. **Find references.** In AI mode, OpenAI interprets the complete description, including timing, context, and negation, and plans up to four public medical topic searches. There is no fixed condition keyword list in PseudoClinic. Reference-only mode searches the question directly, using up to 160 characters.
+3. **Retrieve evidence.** The backend retrieves up to eight deduplicated MedlinePlus excerpts in parallel. Its reference cache lasts up to 12 hours.
+4. **Build an explanation.** A second OpenAI call uses the supplied evidence to produce a concise overview, up to four possible explanations, up to three medication names/classes, and follow-up questions. Insufficient evidence can produce fewer or no suggestions.
+5. **Check citations.** The model selects constrained evidence-passage IDs. The server attaches the exact passage and source, rejects unknown citations, and omits medication names absent from the cited excerpts. These checks do not prove medical accuracy or personal suitability.
 
-- MedlinePlus integration for health information from the U.S. National Library of Medicine.
-- NLM Clinical Tables integration for medical terminology lookup.
-- Research-result organization with expandable condition cards.
-- On-demand searches of external reference services.
+Quick summary shows the first sentence of each overview section, retaining citations; it does not make another AI request. Full explanation restores the text. Fast responses have a minimum 1.4-second thinking animation; requests begin immediately, and care notices bypass that visual delay.
 
-### Synthetic Patient Records
+Potential immediate-danger descriptions can produce a care notice before reference retrieval. This is **not validated triage** and cannot rule out an emergency. Missing keys, unavailable references, and invalid model output produce explanatory notices or reference-only fallbacks.
 
-- Optional integration with Synthea-generated fictional patient data.
-- Patient selection and demographic information retrieval.
-- Access to synthetic conditions, medication records, and allergies.
-- Support for structured exploration of simulated medical histories.
+CliniCare Bay keeps its separate educational keyword/profile matching engine. Its topic matches and reference order are not diagnostic probabilities.
 
-*Note: Synthea CSV datasets are stored locally and are not included in the public repository. This feature requires additional data configuration in deployed environments.*
-
-### Medical Library
-
-- Search health topics using MedlinePlus.
-- Review short research summaries.
-- Open original references for additional reading.
-- Access PubMed, ClinicalTrials.gov, and other educational resources.
-
-### Interactive Dashboard
-
-- Responsive interface with teal-and-navy branding.
-- Dedicated case-analysis workspace.
-- Expandable research results.
-- Interactive source information and navigation.
-- No account creation required.
-
----
-
-## Technology Stack
+## Stack and sources
 
 | Layer | Technology |
 |---|---|
-| Backend | Python, FastAPI |
-| ASGI Server | Uvicorn |
-| Frontend | HTML5, CSS3, JavaScript |
-| Health Information | NIH MedlinePlus |
-| Terminology Search | NLM Clinical Tables |
-| Synthetic Data | Synthea |
-| Version Control | Git, GitHub |
-| Deployment | Render |
+| Backend | Python, FastAPI, Pydantic, Uvicorn |
+| Frontend | HTML, CSS, vanilla JavaScript; locally drawn SVG illustrations |
+| Optional AI | OpenAI Chat Completions with structured JSON output |
+| Health references | [MedlinePlus](https://medlineplus.gov/) from the U.S. National Library of Medicine |
+| Terminology lookup | [NLM Clinical Tables](https://clinicaltables.nlm.nih.gov/) |
+| Fictional patients | [Synthea](https://synthetichealth.github.io/synthea/) CSV records |
+| Hosting and checks | Render, GitHub, GitHub Actions |
 
-## System Architecture
+PubMed and ClinicalTrials.gov are outbound reading links in the Library; PseudoClinic's retrieved evidence comes from MedlinePlus.
 
-```text
-                  USER
-                    |
-                    v
-          MedInsight Web Interface
-            HTML / CSS / JS
-                    |
-                    v
-             FastAPI Backend
-                    |
-          +---------+---------+
-          |         |         |
-          v         v         v
-       Case      Research   Synthetic
-      Analysis    Engine    Patient Data
-          |         |         |
-          v         v         v
-       Keyword   MedlinePlus  Synthea
-       Matching  NLM Tables   CSV Files
-          |         |         |
-          +---------+---------+
-                    |
-                    v
-          Educational Results
-```
+## Run locally
 
-The backend exposes endpoints for fictional case analysis, medical reference retrieval, health-topic lookup, and synthetic patient records.
-
-## Project Structure
-
-```text
-medinsight-ai/
-├── backend/
-│   ├── main.py
-│   ├── research_engine.py
-│   ├── index.html
-│   ├── favicon.svg
-│   ├── requirements.txt
-│   └── data/                 # Local synthetic datasets
-├── .gitignore
-└── README.md
-```
-
-## Getting Started
-
-### Requirements
-
-- Python 3.10+
-- pip
-- Internet access for external medical references
-
-### 1. Clone the repository
+Requires Python 3.10+ and internet access for reference retrieval. From this repository:
 
 ```bash
-git clone https://github.com/jaivenk/medinsight-ai.git
-cd medinsight-ai/backend
-```
-
-### 2. Create and activate a virtual environment
-
-```bash
+cd backend
 python3 -m venv .venv
 source .venv/bin/activate
-```
-
-On Windows, activate with:
-
-```powershell
-.venv\Scripts\activate
-```
-
-### 3. Install dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-### 4. Start the server
-
-```bash
 uvicorn main:app --reload
 ```
 
-Visit **http://127.0.0.1:8000**.
+On Windows, activate with `.venv\Scripts\activate` instead.
 
-Alternatively, use the **[Live Demo](https://medinsight-ai-e7ps.onrender.com)** without installing anything.
+Open **http://127.0.0.1:8000** and keep the server running. Do not use the HTML file as a standalone app: its API routes require FastAPI. Direct file opens redirect to the local server on port 8000.
 
-### Optional: Synthetic Patient Data
+The four bundled sample CSVs are tracked in `backend/data/`. Other CSV files are ignored by default. Replacement patient datasets must remain fictional.
 
-Generate synthetic patient data using [Synthea](https://github.com/synthetichealth/synthea), then place the required CSV files inside `backend/data/`.
+### Optional AI configuration
 
-The patient-loading functionality expects files including `patients.csv`, `conditions.csv`, `medications.csv`, and `allergies.csv`.
+Set `OPENAI_API_KEY` in the **server environment**. `OPENAI_MODEL` defaults to `gpt-4o-mini` and must support structured output. `backend/.env.example` lists the variable names with no key; the app does not automatically load `.env` files.
 
-These datasets are excluded from version control. The public deployment may not have this feature configured.
+For local zsh, enter a key without displaying it or putting its value in shell history, then start the server from the same terminal:
 
----
+```zsh
+read -s 'OPENAI_API_KEY?OpenAI API key: '
+export OPENAI_API_KEY
+export OPENAI_MODEL=gpt-4o-mini
+uvicorn main:app --reload
+```
 
-## How the Research Engine Works
+API billing and model access must be available in the associated OpenAI project. A ChatGPT subscription does not configure this app's server.
 
-**1. Case intake:** A user enters details for a fictional patient or selects a synthetic record.
+**Never place a key in frontend code, screenshots, Git commits, or browser requests.** `.env` files are ignored except for the empty example. `/ai-analyzer/status` returns availability only, never credentials. Provider failures are converted into generic messages.
 
-**2. Topic matching:** The application identifies example condition topics using predefined symptom keywords and terminology matching.
+### Data flow and privacy
 
-**3. Reference retrieval:** The backend requests information from MedlinePlus and NLM Clinical Tables.
+- AI mode sends the full question and retrieved excerpts to OpenAI. Requests use `store: false`; provider retention policies still apply.
+- The AI planner is instructed to strip personal details from the short search topics sent to MedlinePlus. This is not a guaranteed anonymization mechanism.
+- Reference-only mode sends the question directly to MedlinePlus. Library and patient research features also send their search terms to NLM services.
+- The app does not intentionally save Analyzer questions or answers. Hosting infrastructure and development tools may retain data. Use fictional information only.
 
-**4. Results presentation:** Relevant reference matches are organized into readable reports and expandable research cards.
+## Tests and verification
 
-**5. Further exploration:** Users can search additional topics and visit original medical references.
+From the project root:
 
-Research matches are informational associations rather than clinically validated predictions. The system does not calculate diagnostic probabilities or establish that a patient has any particular medical condition.
+```bash
+backend/.venv/bin/python -m pip install pytest httpx
+backend/.venv/bin/python -m pytest -q
+```
 
-## Deployment
+The current suite contains **46 tests**. GitHub Actions runs it on Python 3.12. Tests cover the existing patient/report/favicon routes plus Analyzer input validation, full-description planning, opt-in, missing configuration, urgent-notice short-circuiting, citation/evidence checks, unsupported medication names, unsafe links, incomplete/refused output, outages, and secret-safe errors.
 
-MedInsight AI is deployed using **Render**, with source code maintained on GitHub.
+Upstream services are mocked in automated tests. Passing tests do not establish diagnostic accuracy or a working production API key. Local browser checks additionally verified a live AI answer with citations, Quick summary, synthetic patient loading/report generation, all four navigation tabs, and MedlinePlus search. README screenshots were captured from those local flows.
 
-The hosted application runs FastAPI as a cloud web service, allowing users to access the interface without installing Python or operating a local server.
+Before accepting a deployment, verify the same flows on the Render URL and confirm AI availability separately from reference-only retrieval.
 
-**Live application:** https://medinsight-ai-e7ps.onrender.com
+## Deploy the existing Render service
 
-The service uses Render's free hosting tier, so initial requests may be delayed after periods of inactivity.
+This repository backs [the existing Render app](https://medinsight-ai-e7ps.onrender.com). Update that service rather than creating a second project.
 
-## Current Limitations
+| Setting | Value |
+|---|---|
+| Repository | `jaivenk/medinsight-ai` |
+| Branch | `main` |
+| Root directory | `backend` |
+| Build command | `pip install -r requirements.txt` |
+| Start command | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
+| Optional private variables | `OPENAI_API_KEY`, `OPENAI_MODEL` |
 
-- No trained medical diagnostic machine-learning model.
-- No clinical validation or diagnostic accuracy benchmarking.
-- No user authentication or persistent patient database.
-- External research searches depend on third-party service availability.
-- Public deployment does not currently include the local synthetic patient datasets.
-- Not intended for healthcare decision-making or use with identifiable patient data.
+Run the tests, commit the intended files, and push `main`. Auto-deploy was disabled when the existing service was inspected for this release; choose **Manual Deploy → Deploy latest commit** after the push. If automatic deployment is enabled later, watch its deployment in the existing Render dashboard. Check the deployed commit, build logs, homepage, favicon, patient list, Library search, and `/ai-analyzer/status`; then test an educational AI sample when the production key is configured.
 
-## Development Roadmap
+Local environment variables do not transfer to Render. A key must be entered privately in Render's Environment settings to enable hosted AI. Keep reference-only mode available when no production key is configured. Roll back to the last successful deploy in Render if post-deployment checks fail.
 
-- [ ] Expand medical terminology matching and result ranking
-- [ ] Improve reference transparency and research citations
-- [ ] Add automated backend and frontend tests
-- [ ] Configure synthetic patient datasets for cloud deployment
-- [ ] Improve mobile accessibility and responsiveness
-- [ ] Introduce more advanced research filtering
-- [ ] Add example cases and interface screenshots
-- [ ] Explore clinically informed evaluation methods for educational research matching
+The app currently has no authentication, rate limiting, or AI spending controls. An unrestricted public deployment with a configured key can consume paid API usage; those controls remain future work.
 
----
+## API reference
 
-## Motivation
+| Method | Route | Purpose |
+|---|---|---|
+| GET | `/` | Interface |
+| GET | `/favicon.svg` | Custom favicon |
+| GET | `/ai-analyzer/status` | Server-side AI availability boolean |
+| POST | `/ai-analyzer` | `{ "prompt": "Explain eczema", "use_ai": false }` |
+| GET | `/patients` | Bundled synthetic patient list |
+| GET | `/patients/{patient_id}` | Synthetic record and related history |
+| POST | `/analyze` | Fictional-case report |
+| POST | `/differential-case` | Educational symptom-profile matches |
+| POST | `/research-case` | Medical reference retrieval |
+| GET | `/medical-topics?search=eczema` | Library search |
 
-MedInsight AI began as an independent project motivated by an interest in medicine, biology, and the potential for software based medical care within a new age. 
+Analyzer responses include `mode` (`ai_assisted`, `reference_only`, or `safety_notice`), searched terms, cited sections, possibilities, medication information, follow-up questions, sources, warnings, a safety notice, and a UTC retrieval timestamp. The timestamp marks the request, not source publication; excerpts may be cached.
 
-The project serves as a practical exploration of API integration, backend development, frontend interaction, research retrieval, and deployment.
+## Project layout
 
-It is an evolving educational platform intended to support learning and experimentation.
+```text
+backend/
+  main.py                 FastAPI application and patient/report routes
+  analyzer_engine.py      Optional AI planning, retrieval, and evidence checks
+  differential_engine.py  Educational symptom profiles
+  research_engine.py      Reference and terminology services
+  index.html              Interface, navigation, and animations
+  favicon.svg             Custom favicon
+  requirements.txt
+  .env.example            Variable names only
+  data/                   Bundled synthetic patient CSVs
+  tests/                  Backend regression tests
+docs/images/              Application screenshots
+.github/workflows/        Backend CI
+pytest.ini                Root-level test configuration
+```
 
-## Developer
+## Limits and next steps
 
-**Jai S. Venkamsetty**
+MedInsight has no clinical validation, diagnostic accuracy benchmark, physical examination, complete differential, prescription service, or complete medication/interaction assessment. AI can misinterpret symptoms and warning signs or produce unsupported claims despite citation checks. Retrieved references are incomplete and depend on external service availability.
 
-GitHub: [@jaivenk](https://github.com/jaivenk)
+Planned work includes automated browser regression tests, stronger retrieval/ranking, usage controls, and clinically informed evaluation of educational explanations. Patient research and PseudoClinic remain learning tools rather than healthcare services.
 
----
+## About
 
-*MedInsight AI is an independent educational project. It is not affiliated with or endorsed by the National Institutes of Health, the National Library of Medicine, or Synthea.*
+Built by Jai Venkamsetty as an independent project exploring medicine, biology, and software. Contributions and reproducible bug reports are welcome through GitHub issues.
 
-**Built for research, exploration, and learning.**
+See [LICENSE](LICENSE) for the repository's license terms.
